@@ -1,19 +1,22 @@
 package com.crud.tacho.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Duration;
 import java.util.Date;
 
+@NoArgsConstructor
 @Getter
 @Entity
 @Table(name = "INFRINGEMENTS")
 public class Infringement {
 
     @Id
+    @GeneratedValue
     @Column(name = "INFRINGEMENT_ID")
-    private Long id;
+    private Long infringementId;
 
     @Column
     private String type;

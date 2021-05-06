@@ -1,19 +1,22 @@
 package com.crud.tacho.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
+@NoArgsConstructor
 @Getter
 @Entity
 @Table(name = "INVOICES")
 public class Invoice {
 
     @Id
+    @GeneratedValue
     @Column(name = "INVOICE_ID")
-    private Long id;
+    private Long invoiceId;
 
     @Column
     private Date date;
