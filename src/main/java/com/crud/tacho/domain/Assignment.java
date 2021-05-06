@@ -1,9 +1,7 @@
 package com.crud.tacho.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 
@@ -15,13 +13,14 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Entity
 @Table(name = "ASSIGNMENTS")
 public class Assignment {
 
     @Id
     @GeneratedValue
-    @Column(name = "ASSIGNMENTS_ID")
+    @Column(name = "ASSIGNMENT_ID")
     private Long assignmentId;
 
     @Column(name = "START_TIME")
@@ -61,19 +60,18 @@ public class Assignment {
     )
     private Set<Infringement> infringements;
 
-//    public Assignment(LocalDateTime startTime, LocalDateTime endTime, Duty duty, Driver driver, Invoice invoice, List<Entry> entries, Set<Infringement> infringements) {
-//        this.startTime = startTime;
-//        this.endTime = endTime;
-//        this.duty = duty;
-//        this.driver = driver;
-//        this.invoice = invoice;
-//        this.entries = entries;
-//        this.infringements = infringements;
-//        //this.duration = Duration.between(endTime, startTime);
-//    }
+    @Autowired
+    public Assignment(LocalDateTime startTime, LocalDateTime endTime, Duty duty, Driver driver) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.duty = duty;
+        this.driver = driver;
+        this.duration = Duration.between(startTime, endTime);
+    }
 
     public Assignment(LocalDateTime startTime, LocalDateTime endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
+        this.duration = Duration.between(endTime, startTime);
     }
 }
