@@ -8,8 +8,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 @Transactional
+@Repository
 public interface AssignmentRepository extends CrudRepository<Assignment, Long> {
 
     @Override
