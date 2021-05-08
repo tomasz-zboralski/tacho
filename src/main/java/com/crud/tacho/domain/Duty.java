@@ -1,5 +1,6 @@
 package com.crud.tacho.domain;
 
+import com.crud.tacho.domain.decorator.Job;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Entity(name = "DUTIES")
-public class Duty {
+public class Duty implements Job {
 
     @Id
     @GeneratedValue
@@ -19,7 +20,10 @@ public class Duty {
     private Long dutyId;
 
     @Column
-    private BigDecimal rate;
+    private BigDecimal hourlyRate;
+
+    @Column
+    private BigDecimal allowance = BigDecimal.ZERO;
 
     @Column
     private String agency;
@@ -35,8 +39,8 @@ public class Duty {
     )
     private Set<Assignment> assignments = new HashSet<>();
 
-    public Duty(BigDecimal rate, String agency, String company, Set<Assignment> assignments) {
-        this.rate = rate;
+    public Duty(BigDecimal hourlyRate, BigDecimal allowance, String agency, String company, Set<Assignment> assignments) {
+        this.allowance = allowance;
         this.agency = agency;
         this.company = company;
         this.assignments = assignments;

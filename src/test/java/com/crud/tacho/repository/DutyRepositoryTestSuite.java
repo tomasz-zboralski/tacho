@@ -1,6 +1,9 @@
 package com.crud.tacho.repository;
 
 import com.crud.tacho.domain.Duty;
+import com.crud.tacho.domain.decorator.BonusDecorator;
+import com.crud.tacho.domain.decorator.Job;
+import com.crud.tacho.domain.decorator.NightOutDecorator;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,7 @@ public class DutyRepositoryTestSuite {
     void testSaveDuty() {
 
         //Given
-        Duty duty = new Duty(BigDecimal.TEN, "Agency", "Company", new HashSet<>());
+        Duty duty = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "Agency", "Company", new HashSet<>());
 
         //When
         dutyRepository.save(duty);
@@ -38,11 +41,26 @@ public class DutyRepositoryTestSuite {
     }
 
     @Test
+    void testSaveDutyWithDecorators() {
+
+        //Given
+        Job duty = new Duty(BigDecimal.TEN ,BigDecimal.ZERO, "Agency", "Company", new HashSet<>());
+
+        //When
+        duty = new NightOutDecorator(duty);
+        duty = new BonusDecorator(duty);
+        duty = new BonusDecorator(duty);
+        Duty testDuty = (Duty) duty;
+
+        dutyRepository.save(testDuty);
+    }
+
+    @Test
     void testFindAllDuties() {
 
         //Given
-        Duty duty1 = new Duty(BigDecimal.TEN, "Agency1", "Company1", new HashSet<>());
-        Duty duty2 = new Duty(BigDecimal.TEN, "Agency2", "Company2", new HashSet<>());
+        Duty duty1 = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "Agency1", "Company1", new HashSet<>());
+        Duty duty2 = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "Agency2", "Company2", new HashSet<>());
 
 
         //When
@@ -65,7 +83,7 @@ public class DutyRepositoryTestSuite {
     @Test
     void testDeleteById() {
         //Given
-        Duty duty = new Duty(BigDecimal.TEN, "Agency", "Company", new HashSet<>());
+        Duty duty = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "Agency", "Company", new HashSet<>());
 
         //When
         dutyRepository.save(duty);
