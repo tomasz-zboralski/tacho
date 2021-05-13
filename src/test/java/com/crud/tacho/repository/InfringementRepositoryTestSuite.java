@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
@@ -51,6 +53,33 @@ public class InfringementRepositoryTestSuite {
 
         //Then
         assertEquals(2, infringements);
+
+        //CleanUp
+        infringementRepository.deleteById(infringement1Id);
+        infringementRepository.deleteById(infringement2Id);
+
+    }
+
+    @Test
+    void testFindValidInfringements() {
+
+        LocalDateTime laterThanNeeded = LocalDateTime.now().minusDays(30);
+        LocalDateTime inTimeNeeded = LocalDateTime.now().minusDays(2);
+
+        Infringement infringement1 = new Infringement(null, laterThanNeeded, laterThanNeeded, null, null);
+        Infringement infringement2 = new Infringement(null, inTimeNeeded, inTimeNeeded, null, null);
+
+        //When
+        infringementRepository.save(infringement1);
+        infringementRepository.save(infringement2);
+
+        Long infringement1Id = infringement1.getInfringementId();
+        Long infringement2Id = infringement2.getInfringementId();
+
+        int infringements = infringementRepository.retrieveValidInfringement().size();
+
+        //Then
+        assertEquals(1, infringements);
 
         //CleanUp
         infringementRepository.deleteById(infringement1Id);

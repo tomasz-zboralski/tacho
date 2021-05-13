@@ -1,6 +1,7 @@
 package com.crud.tacho.repository;
 
 import com.crud.tacho.domain.Infringement;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,7 @@ public interface InfringementRepository extends CrudRepository<Infringement, Lon
 
     @Override
     void deleteById(Long id);
+
+    @Query
+    List<Infringement> retrieveValidInfringement();
 }
