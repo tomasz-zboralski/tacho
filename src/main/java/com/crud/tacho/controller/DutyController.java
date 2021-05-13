@@ -43,4 +43,10 @@ public class DutyController {
         Duty duty = dutyService.addNightOut(dutyId);
         return dutyMapper.mapToDutyDto(dutyService.createDuty(duty));
     }
+
+    @PutMapping(value = "/duties/{dutyId}/bonus/{value}")
+    public DutyDto addBonus(@PathVariable Long dutyId, @PathVariable BigDecimal value) throws DutyNotFoundException {
+        Duty duty = dutyService.addBonus(dutyId, value);
+        return dutyMapper.mapToDutyDto(dutyService.createDuty(duty));
+    }
 }

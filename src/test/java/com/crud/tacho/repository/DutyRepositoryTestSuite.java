@@ -52,15 +52,15 @@ public class DutyRepositoryTestSuite {
 
         //When
         duty = new NightOutDecorator(duty);
-        duty = new BonusDecorator(duty);
-        duty = new BonusDecorator(duty);
+//        duty = new BonusDecorator(duty);
+//        duty = new BonusDecorator(duty);
         Duty testDuty = dutyMapper.mapJobToDuty(duty);
 
         dutyRepository.save(testDuty);
 
         Long dutyId = testDuty.getDutyId();
         Duty savedDuty = dutyRepository.findById(dutyId).get();
-        savedDuty = dutyMapper.mapJobToDuty(new BonusDecorator(savedDuty));
+        savedDuty = dutyMapper.mapJobToDuty(new NightOutDecorator(savedDuty));
         dutyRepository.save(savedDuty);
     }
 

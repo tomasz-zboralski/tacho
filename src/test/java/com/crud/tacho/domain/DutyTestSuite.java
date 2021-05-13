@@ -51,9 +51,9 @@ public class DutyTestSuite {
         Job duty = new Duty(BigDecimal.TEN ,BigDecimal.ZERO, "Agency", "Company", new HashSet<>());
 
         //When
-        //duty = new NightOutDecorator(duty);
-        duty = new BonusDecorator(duty);
-        duty = new BonusDecorator(duty);
+        duty = new NightOutDecorator(duty);
+        duty = new BonusDecorator(duty, new BigDecimal(100));
+//        duty = new BonusDecorator(duty);
 
         BigDecimal allowance = duty.getAllowance();
 

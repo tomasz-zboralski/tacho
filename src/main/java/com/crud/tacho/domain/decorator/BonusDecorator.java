@@ -19,10 +19,11 @@ public class BonusDecorator extends AbstractJobDecorator {
 //    @Column(name = "DUTY_ID")
 //    private Long dutyId;
 
-    private BigDecimal value = new BigDecimal(50);
+    private BigDecimal value; //= new BigDecimal(50);
 
-    public BonusDecorator(Job job) {
+    public BonusDecorator(Job job, BigDecimal value) {
         super(job);
+        this.value = value;
         //this.dutyId = job.getDutyId();
     }
 

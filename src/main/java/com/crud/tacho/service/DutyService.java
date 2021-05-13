@@ -2,6 +2,7 @@ package com.crud.tacho.service;
 
 import com.crud.tacho.domain.Duty;
 import com.crud.tacho.domain.DutyDto;
+import com.crud.tacho.domain.decorator.BonusDecorator;
 import com.crud.tacho.domain.decorator.Job;
 import com.crud.tacho.domain.decorator.NightOutDecorator;
 import com.crud.tacho.exception.DutyNotFoundException;
@@ -33,6 +34,12 @@ public class DutyService {
         duty = new NightOutDecorator(duty);
         return dutyMapper.mapJobToDuty(duty);
 
+    }
+
+    public Duty addBonus(Long dutyId, BigDecimal value) throws DutyNotFoundException {
+        Job duty = getDutyById(dutyId);
+        duty = new BonusDecorator(duty, value);
+        return dutyMapper.mapJobToDuty(duty);
     }
 
 
