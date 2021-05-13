@@ -1,5 +1,6 @@
 package com.crud.tacho.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import java.time.Duration;
 import java.util.Date;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Entity
