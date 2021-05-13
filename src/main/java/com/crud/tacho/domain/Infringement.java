@@ -13,12 +13,16 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@NamedQueries(
+@NamedQueries({
         @NamedQuery(
                 name = "Infringement.retrieveValidInfringement",
                 query = "FROM Infringement WHERE DATEDIFF(NOW(), START_TIME) < 28 "
+        ),
+        @NamedQuery(
+                name = "Infringement.retrieveNotValidInfringement",
+                query = "FROM Infringement WHERE DATEDIFF(NOW(), START_TIME) > 28 "
         )
-)
+})
 @Entity
 @Table(name = "INFRINGEMENTS")
 public class Infringement {

@@ -13,7 +13,15 @@ public class InfringementService {
 
     private final InfringementRepository infringementRepository;
 
-    public List<Infringement> getAllInfringements() {
-        return infringementRepository.findAll();
+
+    public List<Infringement> getAllValidInfringements() {
+        return infringementRepository.retrieveValidInfringement();
+    }
+
+    public void deleteAllNotValidInfringements() {
+        List<Infringement> infringements = infringementRepository.retrieveNotValidInfringements();
+        infringements.stream()
+                .mapToLong(Infringement::getInfringementId)
+                .forEach(infringementRepository::deleteById);
     }
 }

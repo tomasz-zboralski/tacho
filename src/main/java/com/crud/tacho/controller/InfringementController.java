@@ -21,7 +21,8 @@ public class InfringementController {
     @GetMapping(value = "infringements")
     public List<InfringementDto> getInfringements() {
         return infringementMapper.mapToInfringementDtoList(
-                infringementService.getAllInfringements()
+                infringementService.getAllValidInfringements()
         );
     }
+
 }

@@ -27,4 +27,7 @@ public interface InfringementRepository extends CrudRepository<Infringement, Lon
 
     @Query
     List<Infringement> retrieveValidInfringement();
+
+    @Query
+    List<Infringement> retrieveNotValidInfringements();
 }
