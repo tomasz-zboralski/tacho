@@ -15,23 +15,24 @@ import java.util.List;
 public class AssignmentService {
 
     private final AssignmentRepository assignmentRepository;
-    private final AssignmentMapper assignmentMapper;
+    //private final AssignmentMapper assignmentMapper;
 
-    public List<AssignmentDto> getAssignments() {
-        return assignmentMapper.mapToAssignmentDtoList(
-                assignmentRepository.findAll());
+    public List<Assignment> getAssignments() {
+        return assignmentRepository.findAll();
     }
 
-    public AssignmentDto getAssignmentDto(Long id) throws AssignmentNotFoundException {
-        return assignmentMapper.mapToAssignmentDto(
-                assignmentRepository.findById(id)
-                        .orElseThrow(AssignmentNotFoundException::new));
+//    public AssignmentDto getAssignmentById(Long id) throws AssignmentNotFoundException {
+//        return assignmentMapper.mapToAssignmentDto(
+//                assignmentRepository.findById(id)
+//                        .orElseThrow(AssignmentNotFoundException::new));
+//    }
+
+    public Assignment getAssignmentById(Long id) throws AssignmentNotFoundException {
+        return assignmentRepository.findById(id).orElseThrow(AssignmentNotFoundException::new);
     }
 
-    public AssignmentDto createAssignment(AssignmentDto assignmentDto) {
-        Assignment assignment = assignmentMapper.mapToAssignment(assignmentDto);
-        assignmentRepository.save(assignment);
-        return assignmentMapper.mapToAssignmentDto(assignment);
+    public Assignment createAssignment(Assignment assignment) {
+        return assignmentRepository.save(assignment);
     }
 
     public void deleteAssignment(Long id) {

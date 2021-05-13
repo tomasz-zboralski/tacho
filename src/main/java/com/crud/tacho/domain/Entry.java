@@ -1,12 +1,16 @@
 package com.crud.tacho.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Date;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Entity
@@ -22,15 +26,24 @@ public class Entry {
     private String type;
 
     @Column
-    private Date startTime;
+    private LocalDateTime startTime;
 
     @Column
-    private Date endTime;
+    private LocalDateTime endTime;
 
     @Column
     private Duration duration;
 
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ASSIGNMENT_ID")
-    private Assignment assignment;
+    private  Assignment assignment;
+
+    public Entry(String type, LocalDateTime startTime, LocalDateTime endTime, Duration duration, Assignment assignment) {
+        this.type = type;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.duration = duration;
+        this.assignment = assignment;
+    }
 }

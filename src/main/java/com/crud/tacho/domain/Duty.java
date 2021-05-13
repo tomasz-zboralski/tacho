@@ -1,18 +1,23 @@
 package com.crud.tacho.domain;
 
 import com.crud.tacho.domain.decorator.Job;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
+//@Inheritance
+//@DiscriminatorColumn(name="D_TYPE")
 @Entity(name = "DUTIES")
-public class Duty implements Job {
+public class Duty implements Job, Serializable {
 
     @Id
     @GeneratedValue
@@ -40,6 +45,7 @@ public class Duty implements Job {
     private Set<Assignment> assignments = new HashSet<>();
 
     public Duty(BigDecimal hourlyRate, BigDecimal allowance, String agency, String company, Set<Assignment> assignments) {
+        this.hourlyRate = hourlyRate;
         this.allowance = allowance;
         this.agency = agency;
         this.company = company;

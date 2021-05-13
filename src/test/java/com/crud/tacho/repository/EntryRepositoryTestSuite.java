@@ -1,11 +1,18 @@
 package com.crud.tacho.repository;
 
+import com.crud.tacho.domain.Assignment;
 import com.crud.tacho.domain.Entry;
+import com.crud.tacho.domain.EntryType;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +27,16 @@ public class EntryRepositoryTestSuite {
     void testSaveEntry() {
 
         //Given
-        Entry entry = new Entry();
+        //Entry entry = new Entry();
+        Entry entry = new Entry(
+                EntryType.DRIVE.getType(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Duration.between(LocalDateTime.now(), LocalDateTime.now()),
+                new Assignment(LocalDateTime.now(), LocalDateTime.now().plusDays(1))
+
+
+        );
 
         //When
         entryRepository.save(entry);
@@ -30,7 +46,7 @@ public class EntryRepositoryTestSuite {
         assertTrue(entryRepository.findById(entryId).isPresent());
 
         //CleanUp
-        entryRepository.deleteById(entryId);
+        //entryRepository.deleteById(entryId);
 
     }
 
@@ -57,6 +73,12 @@ public class EntryRepositoryTestSuite {
         entryRepository.deleteById(entry1Id);
         entryRepository.deleteById(entry2Id);
 
+    }
+
+    @Test
+    void testFindEntriesByType() {
+        List<Entry> entries = entryRepository.findAllByType("Drive");
+        System.out.println(entries.size());
     }
 
     @Test

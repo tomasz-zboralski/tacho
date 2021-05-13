@@ -15,6 +15,10 @@ public interface EntryRepository extends CrudRepository<Entry, Long> {
     @Override
     List<Entry> findAll();
 
+    List<Entry> findAllByType(String type);
+
+    List<Entry> findAllByAssignment_AssignmentId(Long id);
+
     @Override
     Optional<Entry> findById(Long id);
 

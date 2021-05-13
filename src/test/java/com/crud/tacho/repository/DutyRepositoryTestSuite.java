@@ -4,6 +4,7 @@ import com.crud.tacho.domain.Duty;
 import com.crud.tacho.domain.decorator.BonusDecorator;
 import com.crud.tacho.domain.decorator.Job;
 import com.crud.tacho.domain.decorator.NightOutDecorator;
+import com.crud.tacho.mapper.DutyMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class DutyRepositoryTestSuite {
 
     @Autowired
     DutyRepository dutyRepository;
+
+    @Autowired
+    DutyMapper dutyMapper;
 
     @Test
     void testSaveDuty() {
@@ -44,15 +48,20 @@ public class DutyRepositoryTestSuite {
     void testSaveDutyWithDecorators() {
 
         //Given
-        Job duty = new Duty(BigDecimal.TEN ,BigDecimal.ZERO, "Agency", "Company", new HashSet<>());
+        Job duty = new Duty(BigDecimal.TEN ,BigDecimal.ONE, "Agency", "Company", new HashSet<>());
 
         //When
         duty = new NightOutDecorator(duty);
         duty = new BonusDecorator(duty);
         duty = new BonusDecorator(duty);
-        Duty testDuty = (Duty) duty;
+        Duty testDuty = dutyMapper.mapJobToDuty(duty);
 
         dutyRepository.save(testDuty);
+
+        Long dutyId = testDuty.getDutyId();
+        Duty savedDuty = dutyRepository.findById(dutyId).get();
+        savedDuty = dutyMapper.mapJobToDuty(new BonusDecorator(savedDuty));
+        dutyRepository.save(savedDuty);
     }
 
     @Test

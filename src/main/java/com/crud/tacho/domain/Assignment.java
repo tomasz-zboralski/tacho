@@ -1,5 +1,6 @@
 package com.crud.tacho.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -44,6 +45,7 @@ public class Assignment {
     @JoinColumn(name = "INVOICE_ID")
     private Invoice invoice;
 
+    @JsonManagedReference
     @OneToMany(
             targetEntity = Entry.class,
             mappedBy = "assignment",

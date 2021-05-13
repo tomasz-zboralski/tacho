@@ -30,19 +30,19 @@ public class DutyTestSuite {
         assertEquals(BigDecimal.ZERO, allowance);
     }
 
-    @Test
-    void testDutyWithNightOut() {
-
-        //Given
-        Job duty = new Duty(BigDecimal.TEN ,BigDecimal.ZERO, "Agency", "Company", new HashSet<>());
-
-        //When
-        duty = new NightOutDecorator(duty);
-        BigDecimal allowance = duty.getAllowance();
-
-        //Then
-        assertEquals(new BigDecimal(25), allowance);
-    }
+//    @Test
+//    void testDutyWithNightOut() {
+//
+//        //Given
+//        Job duty = new Duty(BigDecimal.TEN ,BigDecimal.ZERO, "Agency", "Company", new HashSet<>());
+//
+//        //When
+//        duty = new NightOutDecorator(duty);
+//        BigDecimal allowance = duty.getAllowance();
+//
+//        //Then
+//        assertEquals(new BigDecimal(25), allowance);
+//    }
 
     @Test
     void testDutyWithNightOutAndDoubleBonus() {
@@ -51,7 +51,7 @@ public class DutyTestSuite {
         Job duty = new Duty(BigDecimal.TEN ,BigDecimal.ZERO, "Agency", "Company", new HashSet<>());
 
         //When
-        duty = new NightOutDecorator(duty);
+        //duty = new NightOutDecorator(duty);
         duty = new BonusDecorator(duty);
         duty = new BonusDecorator(duty);
 
