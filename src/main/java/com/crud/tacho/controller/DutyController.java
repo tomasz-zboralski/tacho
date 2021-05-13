@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.junit.runner.RunWith;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
@@ -33,6 +35,12 @@ public class DutyController {
     @PutMapping(value = "/duties")
     public DutyDto updateDuty(@RequestBody DutyDto dutyDto) {
         Duty duty = dutyMapper.mapJobToDuty(dutyDto);
+        return dutyMapper.mapToDutyDto(dutyService.createDuty(duty));
+    }
+
+    @PutMapping(value = "/duties/nightout/{dutyId}")
+    public DutyDto addNightOut(@PathVariable Long dutyId) throws DutyNotFoundException {
+        Duty duty = dutyService.addNightOut(dutyId);
         return dutyMapper.mapToDutyDto(dutyService.createDuty(duty));
     }
 }
