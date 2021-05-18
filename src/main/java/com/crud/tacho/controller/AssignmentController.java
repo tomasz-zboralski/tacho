@@ -3,6 +3,8 @@ package com.crud.tacho.controller;
 import com.crud.tacho.domain.Assignment;
 import com.crud.tacho.domain.AssignmentDto;
 import com.crud.tacho.exception.AssignmentNotFoundException;
+import com.crud.tacho.exception.DriverNotFoundException;
+import com.crud.tacho.exception.DutyNotFoundException;
 import com.crud.tacho.mapper.AssignmentMapper;
 import com.crud.tacho.service.AssignmentService;
 import lombok.RequiredArgsConstructor;
@@ -35,16 +37,26 @@ public class AssignmentController {
 
     }
 
-    @PostMapping(value = "/assignments", consumes = APPLICATION_JSON_VALUE)
-    public AssignmentDto createAssignment(@RequestBody AssignmentDto assignmentDto) {
-        Assignment assignment = assignmentMapper.mapToAssignment(assignmentDto);
-        return assignmentMapper.mapToAssignmentDto(assignmentService.createAssignment(assignment));
+    @PostMapping(value = "/assignments")
+    public AssignmentDto createAssignment(@PathVariable Long dutyId) throws DutyNotFoundException {
+        return assignmentMapper.mapToAssignmentDto(assignmentService.createAssignment(dutyId));
     }
 
-    @PutMapping(value = "/assignments")
-    public AssignmentDto updateAssignment(@RequestBody AssignmentDto assignmentDto) {
-        Assignment assignment = assignmentMapper.mapToAssignment(assignmentDto);
-        return assignmentMapper.mapToAssignmentDto(assignmentService.createAssignment(assignment));
+    @PostMapping(value = "/assignment/{assignmentId}/driver/{driverId}")
+    public void assignDriver(@PathVariable Long assignmentId, @PathVariable Long driverId) throws DriverNotFoundException, AssignmentNotFoundException {
+        assignmentService.assignDriver(assignmentId, driverId);
     }
+
+//    @PostMapping(value = "/assignments", consumes = APPLICATION_JSON_VALUE)
+//    public AssignmentDto createAssignment(@RequestBody AssignmentDto assignmentDto) throws AssignmentNotFoundException {
+//        Assignment assignment = assignmentMapper.mapToAssignment(assignmentDto);
+//        return assignmentMapper.mapToAssignmentDto(assignmentService.createAssignment(assignment));
+//    }
+
+//    @PutMapping(value = "/assignments")
+//    public AssignmentDto updateAssignment(@RequestBody AssignmentDto assignmentDto) throws AssignmentNotFoundException {
+//        Assignment assignment = assignmentMapper.mapToAssignment(assignmentDto);
+//        return assignmentMapper.mapToAssignmentDto(assignmentService.createAssignment(assignment));
+//    }
 
 }

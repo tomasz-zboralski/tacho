@@ -6,6 +6,7 @@ import com.crud.tacho.exception.AssignmentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,7 +17,7 @@ public class AssignmentMapper {
 
     private final EntryMapper entryMapper;
 
-    public Assignment mapToAssignment(AssignmentDto assignmentDto) {
+    public Assignment mapToAssignment(AssignmentDto assignmentDto) throws AssignmentNotFoundException {
         return new Assignment(
                 assignmentDto.getAssignmentId(),
                 assignmentDto.getStartTime(),
@@ -50,10 +51,16 @@ public class AssignmentMapper {
                 .collect(Collectors.toList());
     }
 
-    public Set<Assignment> mapToAssignmentSet(Set<AssignmentDto> assignmentsDto) {
-        return assignmentsDto.stream()
-                .map(this::mapToAssignment)
-                .collect(Collectors.toSet());
+    public Set<Assignment> mapToAssignmentSet(Set<AssignmentDto> assignmentsDto) throws AssignmentNotFoundException {
+        Set<Assignment> assignmentSet = new HashSet<>();
+        for (AssignmentDto assignmentDto : assignmentsDto) {
+            assignmentSet.add(mapToAssignment(assignmentDto));
+        }
+
+        return assignmentSet;
+//        return assignmentsDto.stream()
+//                .map(this::mapToAssignment)
+//                .collect(Collectors.toSet());
     }
 
     public Set<AssignmentDto> mapToAssignmentDtoSet(Set<Assignment> assignments) {

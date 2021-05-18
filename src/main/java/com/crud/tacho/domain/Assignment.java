@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -52,7 +53,7 @@ public class Assignment {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    private List<Entry> entries;
+    private List<Entry> entries = new ArrayList<>();
 
     @OneToMany(
             targetEntity = Infringement.class,
@@ -71,9 +72,8 @@ public class Assignment {
         this.duration = Duration.between(startTime, endTime);
     }
 
-    public Assignment(LocalDateTime startTime, LocalDateTime endTime) {
-        this.startTime = startTime;
-        this.endTime = endTime;
+    public Assignment(Duty duty) {
         this.duration = Duration.between(endTime, startTime);
+        this.duty = duty;
     }
 }
