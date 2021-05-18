@@ -66,8 +66,8 @@ public class InfringementRepositoryTestSuite {
         LocalDateTime laterThanNeeded = LocalDateTime.now().minusDays(30);
         LocalDateTime inTimeNeeded = LocalDateTime.now().minusDays(2);
 
-        Infringement infringement1 = new Infringement(null, laterThanNeeded, laterThanNeeded, null, null);
-        Infringement infringement2 = new Infringement(null, inTimeNeeded, inTimeNeeded, null, null);
+        Infringement infringement1 = new Infringement(null, laterThanNeeded, laterThanNeeded, null);
+        Infringement infringement2 = new Infringement(null, inTimeNeeded, inTimeNeeded, null);
 
         //When
         infringementRepository.save(infringement1);
@@ -76,14 +76,14 @@ public class InfringementRepositoryTestSuite {
         Long infringement1Id = infringement1.getInfringementId();
         Long infringement2Id = infringement2.getInfringementId();
 
-        int infringements = infringementRepository.retrieveValidInfringement().size();
+        int infringements = infringementRepository.retrieveValidInfringements().size();
 
         //Then
         assertEquals(1, infringements);
 
         //CleanUp
-        infringementRepository.deleteById(infringement1Id);
-        infringementRepository.deleteById(infringement2Id);
+//        infringementRepository.deleteById(infringement1Id);
+//        infringementRepository.deleteById(infringement2Id);
 
     }
 

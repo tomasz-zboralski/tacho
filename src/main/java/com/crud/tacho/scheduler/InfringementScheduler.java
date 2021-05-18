@@ -11,7 +11,7 @@ public class InfringementScheduler {
 
     private final InfringementService infringementService;
 
-    @Scheduled(cron = "0 0 * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void deleteInfringementsOlderThanTwentyEightDays() {
         infringementService.deleteAllNotValidInfringements();
     }

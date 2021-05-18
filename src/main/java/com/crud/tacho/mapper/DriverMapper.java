@@ -2,6 +2,7 @@ package com.crud.tacho.mapper;
 
 import com.crud.tacho.domain.Driver;
 import com.crud.tacho.domain.DriverDto;
+import com.crud.tacho.exception.AssignmentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ public class DriverMapper {
 
     private final AssignmentMapper assignmentMapper;
 
-    public Driver mapToDriver(DriverDto driverDto) {
+    public Driver mapToDriver(DriverDto driverDto) throws AssignmentNotFoundException {
         return new Driver(
                 driverDto.getDriverId(),
                 driverDto.getLimitedCompanyName(),

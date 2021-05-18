@@ -2,6 +2,7 @@ package com.crud.tacho.controller;
 
 import com.crud.tacho.domain.Driver;
 import com.crud.tacho.domain.DriverDto;
+import com.crud.tacho.exception.AssignmentNotFoundException;
 import com.crud.tacho.exception.DriverNotFoundException;
 import com.crud.tacho.mapper.DriverMapper;
 import com.crud.tacho.service.DriverService;
@@ -19,7 +20,7 @@ public class DriverController {
     private final DriverMapper driverMapper;
 
     @PostMapping(value = "/drivers", consumes = APPLICATION_JSON_VALUE)
-    public DriverDto createDriver(@RequestBody DriverDto driverDto) {
+    public DriverDto createDriver(@RequestBody DriverDto driverDto) throws AssignmentNotFoundException {
         Driver driver = driverMapper.mapToDriver(driverDto);
         return driverMapper.mapToDriverDto(driverService.createDriver(driver));
     }
@@ -35,7 +36,7 @@ public class DriverController {
     }
 
     @PutMapping(value = "/drivers")
-    public DriverDto updateDriver(@RequestBody DriverDto driverDto) {
+    public DriverDto updateDriver(@RequestBody DriverDto driverDto) throws AssignmentNotFoundException {
         Driver driver = driverMapper.mapToDriver(driverDto);
         return driverMapper.mapToDriverDto(driverService.createDriver(driver));
     }

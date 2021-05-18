@@ -10,6 +10,7 @@ import javassist.tools.rmi.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,16 +42,22 @@ public class EntryMapper {
         );
     }
 
-    public List<Entry> mapToEntryList(List<EntryDto> entryDtoList) {
-        return entryDtoList.stream()
-                .map(entryDto -> {
-                    try {
-                        return mapToEntry(entryDto);
-                    } catch (AssignmentNotFoundException e) {
-                        return new Entry();
-                    }
-                })
-                .collect(Collectors.toList());
+    public List<Entry> mapToEntryList(List<EntryDto> entryDtoList) throws AssignmentNotFoundException {
+        List<Entry> entryList = new ArrayList<>();
+        for (EntryDto entryDto: entryDtoList) {
+            entryList.add(mapToEntry(entryDto));
+        }
+
+        return entryList;
+//        return entryDtoList.stream()
+//                .map(entryDto -> {
+//                    try {
+//                        return mapToEntry(entryDto);
+//                    } catch (AssignmentNotFoundException e) {
+//                        return new Entry();
+//                    }
+//                })
+//                .collect(Collectors.toList());
     }
 
     public List<EntryDto> mapToEntryDtoList(List<Entry> entryList) {

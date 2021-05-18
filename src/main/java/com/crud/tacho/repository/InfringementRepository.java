@@ -26,7 +26,7 @@ public interface InfringementRepository extends CrudRepository<Infringement, Lon
     void deleteById(Long id);
 
     @Query
-    List<Infringement> retrieveValidInfringement();
+    List<Infringement> retrieveValidInfringements();
 
     @Query
     List<Infringement> retrieveNotValidInfringements();

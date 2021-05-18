@@ -32,9 +32,7 @@ public class EntryRepositoryTestSuite {
                 EntryType.DRIVE.getType(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                Duration.between(LocalDateTime.now(), LocalDateTime.now()),
-                new Assignment(LocalDateTime.now(), LocalDateTime.now().plusDays(1))
-
+                new Assignment(null)
 
         );
 

@@ -39,11 +39,11 @@ public class Entry {
     @JoinColumn(name = "ASSIGNMENT_ID")
     private  Assignment assignment;
 
-    public Entry(String type, LocalDateTime startTime, LocalDateTime endTime, Duration duration, Assignment assignment) {
+    public Entry(String type, LocalDateTime startTime, LocalDateTime endTime, Assignment assignment) {
         this.type = type;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.duration = duration;
+        this.duration = Duration.between(startTime, endTime);
         this.assignment = assignment;
     }
 }

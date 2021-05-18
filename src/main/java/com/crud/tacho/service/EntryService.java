@@ -16,7 +16,8 @@ import java.util.List;
 public class EntryService {
 
     private final EntryRepository entryRepository;
-    //private final EntryMapper entryMapper;
+    private final InfringementService infringementService;
+    private final AssignmentService assignmentService;
 
     public List<Entry> getEntries() {
         return entryRepository.findAll();
@@ -33,7 +34,9 @@ public class EntryService {
         return entryRepository.findById(id).orElseThrow(EntryNotFoundException::new);
     }
 
-    public Entry createEntry(Entry entry) {
+    public Entry createEntry(Entry entry) throws AssignmentNotFoundException {
+        infringementService.calculateInfringement(entry.getAssignment());
+        assignmentService.setStartAndEndTime(entry.getAssignment().getAssignmentId());
         return entryRepository.save(entry);
     }
 

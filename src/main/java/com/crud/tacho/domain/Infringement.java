@@ -15,11 +15,11 @@ import java.util.Date;
 @Getter
 @NamedQueries({
         @NamedQuery(
-                name = "Infringement.retrieveValidInfringement",
+                name = "Infringement.retrieveValidInfringements",
                 query = "FROM Infringement WHERE DATEDIFF(NOW(), START_TIME) < 28 "
         ),
         @NamedQuery(
-                name = "Infringement.retrieveNotValidInfringement",
+                name = "Infringement.retrieveNotValidInfringements",
                 query = "FROM Infringement WHERE DATEDIFF(NOW(), START_TIME) > 28 "
         )
 })
@@ -49,11 +49,11 @@ public class Infringement {
     private Assignment assignment;
 
     @Autowired
-    public Infringement(String type, LocalDateTime startTime, LocalDateTime endTime, Duration duration, Assignment assignment) {
+    public Infringement(String type, LocalDateTime startTime, LocalDateTime endTime, Assignment assignment) {
         this.type = type;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.duration = duration;
+        this.duration = Duration.between(startTime, endTime);
         this.assignment = assignment;
     }
 }
