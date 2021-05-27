@@ -3,6 +3,7 @@ package com.crud.tacho.controller;
 import com.crud.tacho.domain.Entry;
 import com.crud.tacho.domain.EntryDto;
 import com.crud.tacho.exception.AssignmentNotFoundException;
+import com.crud.tacho.exception.DutyNotFoundException;
 import com.crud.tacho.exception.EntryNotFoundException;
 import com.crud.tacho.mapper.EntryMapper;
 import com.crud.tacho.service.DriverService;
@@ -52,14 +53,14 @@ public class EntryController {
     }
 
     @PostMapping(value = "/entries", consumes = APPLICATION_JSON_VALUE)
-    public EntryDto createEntry(@RequestBody EntryDto entryDto) throws AssignmentNotFoundException {
+    public EntryDto createEntry(@RequestBody EntryDto entryDto) throws AssignmentNotFoundException, DutyNotFoundException {
         Entry entry = entryMapper.mapToEntry(entryDto);
 
         return entryMapper.mapToEntryDto(entryService.createEntry(entry));
     }
 
     @PutMapping(value = "/entries")
-    public EntryDto updateEntry(@RequestBody EntryDto entryDto) throws AssignmentNotFoundException {
+    public EntryDto updateEntry(@RequestBody EntryDto entryDto) throws AssignmentNotFoundException, DutyNotFoundException {
         Entry entry = entryMapper.mapToEntry(entryDto);
 
         return entryMapper.mapToEntryDto(entryService.createEntry(entry));

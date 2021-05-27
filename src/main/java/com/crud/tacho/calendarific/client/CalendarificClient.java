@@ -18,11 +18,15 @@ public class CalendarificClient {
 
     private final RestTemplate restTemplate;
 
-    private URI holidaysURL() {
+    private URI holidaysURL(LocalDateTime date) {
 
-        int year = LocalDateTime.now().getYear();
-        int month = LocalDateTime.now().getMonthValue();
-        int day = LocalDateTime.now().getDayOfMonth();
+//        int year = LocalDateTime.now().getYear();
+//        int month = LocalDateTime.now().getMonthValue();
+//        int day = LocalDateTime.now().getDayOfMonth();
+
+        int year = date.getYear();
+        int month = date.getMonthValue();
+        int day = date.getDayOfMonth();
 
         return UriComponentsBuilder.fromHttpUrl("https://calendarific.com/api/v2/holidays")
                 .queryParam("api_key", "c5daf78fe6e1b70cd62a915c5e26e40724edb4ca")
@@ -33,12 +37,19 @@ public class CalendarificClient {
                 .build().encode().toUri();
     }
 
-    public List<CalendarificResponse.Response.HolidayDto> getHolidays() {
+    public List<CalendarificResponse.Response.HolidayDto> getHolidays(LocalDateTime date) {
+
         try {
 
-            CalendarificResponse calendarificResponse = restTemplate.getForObject(holidaysURL(), CalendarificResponse.class);
+            CalendarificResponse calendarificResponse = restTemplate.getForObject(
+                    holidaysURL(date), CalendarificResponse.class
+            );
 
-            return calendarificResponse.getResponse().getHolidayDtoList().stream().collect(Collectors.toList());
+            return calendarificResponse
+                    .getResponse()
+                    .getHolidayDtoList()
+                    .stream()
+                    .collect(Collectors.toList());
 
 
         } catch (RestClientException e) {

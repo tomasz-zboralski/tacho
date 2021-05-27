@@ -31,10 +31,13 @@ public class Assignment {
     @Column(name = "END_TIME")
     private LocalDateTime endTime;
 
+    @Column(name = "HOLIDAY")
+    private boolean isHoliday;
+
     @Column(name = "DURATION")
     private Duration duration;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne//(cascade = CascadeType.ALL)
     @JoinColumn(name = "DUTY_ID")
     private Duty duty;
 
@@ -53,7 +56,7 @@ public class Assignment {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    private List<Entry> entries = new ArrayList<>();
+    private List<Entry> entries;// = new ArrayList<>();
 
     @OneToMany(
             targetEntity = Infringement.class,
@@ -70,10 +73,11 @@ public class Assignment {
         this.duty = duty;
         this.driver = driver;
         this.duration = Duration.between(startTime, endTime);
+        this.isHoliday = false;
     }
 
     public Assignment(Duty duty) {
-        this.duration = Duration.between(endTime, startTime);
+        //this.duration = Duration.between(endTime, startTime);
         this.duty = duty;
     }
 }

@@ -21,7 +21,7 @@ public class DutyTestSuite {
     void testBasicDutyGetAllowance() {
 
         //Given
-        Duty duty = new Duty(BigDecimal.TEN ,BigDecimal.ZERO, "Agency", "Company", new HashSet<>());
+        Duty duty = new Duty(BigDecimal.TEN ,BigDecimal.ZERO, "Agency", "Company");
 
         //When
         BigDecimal allowance = duty.getAllowance();
@@ -48,7 +48,7 @@ public class DutyTestSuite {
     void testDutyWithNightOutAndDoubleBonus() {
 
         //Given
-        Job duty = new Duty(BigDecimal.TEN ,BigDecimal.ZERO, "Agency", "Company", new HashSet<>());
+        Job duty = new Duty(BigDecimal.TEN ,BigDecimal.ZERO, "Agency", "Company");
 
         //When
         duty = new NightOutDecorator(duty);

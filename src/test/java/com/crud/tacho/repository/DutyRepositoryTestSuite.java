@@ -30,7 +30,7 @@ public class DutyRepositoryTestSuite {
     void testSaveDuty() {
 
         //Given
-        Duty duty = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "Agency", "Company", new HashSet<>());
+        Duty duty = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "Agency", "Company");
 
         //When
         dutyRepository.save(duty);
@@ -48,7 +48,7 @@ public class DutyRepositoryTestSuite {
     void testSaveDutyWithDecorators() {
 
         //Given
-        Job duty = new Duty(BigDecimal.TEN ,BigDecimal.ONE, "Agency", "Company", new HashSet<>());
+        Job duty = new Duty(BigDecimal.TEN ,BigDecimal.ONE, "Agency", "Company");
 
         //When
         duty = new NightOutDecorator(duty);
@@ -68,8 +68,8 @@ public class DutyRepositoryTestSuite {
     void testFindAllDuties() {
 
         //Given
-        Duty duty1 = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "Agency1", "Company1", new HashSet<>());
-        Duty duty2 = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "Agency2", "Company2", new HashSet<>());
+        Duty duty1 = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "Agency1", "Company1");
+        Duty duty2 = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "Agency2", "Company2");
 
 
         //When
@@ -92,7 +92,7 @@ public class DutyRepositoryTestSuite {
     @Test
     void testDeleteById() {
         //Given
-        Duty duty = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "Agency", "Company", new HashSet<>());
+        Duty duty = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "Agency", "Company");
 
         //When
         dutyRepository.save(duty);

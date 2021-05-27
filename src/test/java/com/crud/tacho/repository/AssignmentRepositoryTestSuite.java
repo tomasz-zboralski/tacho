@@ -1,6 +1,7 @@
 package com.crud.tacho.repository;
 
 import com.crud.tacho.domain.Assignment;
+import com.crud.tacho.domain.Duty;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ class AssignmentRepositoryTestSuite {
     void testSaveAssignment() {
 
         //Given
-        Assignment assignment = new Assignment(LocalDateTime.now(), LocalDateTime.now().plusDays(1));
+        Assignment assignment = new Assignment(new Duty());
 
         //When
         assignmentRepository.save(assignment);
@@ -41,8 +42,8 @@ class AssignmentRepositoryTestSuite {
     void testFindAllAssignments() {
 
         //Given
-        Assignment assignment1 = new Assignment(LocalDateTime.now(), LocalDateTime.now().plusDays(1));
-        Assignment assignment2 = new Assignment(LocalDateTime.now().minusDays(1), LocalDateTime.now());
+        Assignment assignment1 = new Assignment(new Duty());
+        Assignment assignment2 = new Assignment(new Duty());
 
         //When
         assignmentRepository.save(assignment1);
@@ -66,7 +67,7 @@ class AssignmentRepositoryTestSuite {
     void testDeleteById() {
 
         //Given
-        Assignment assignment = new Assignment(LocalDateTime.now(), LocalDateTime.now().plusDays(1));
+        Assignment assignment = new Assignment(new Duty());
 
         //When
         assignmentRepository.save(assignment);

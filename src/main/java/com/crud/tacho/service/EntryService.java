@@ -3,6 +3,7 @@ package com.crud.tacho.service;
 import com.crud.tacho.domain.Entry;
 import com.crud.tacho.domain.EntryDto;
 import com.crud.tacho.exception.AssignmentNotFoundException;
+import com.crud.tacho.exception.DutyNotFoundException;
 import com.crud.tacho.exception.EntryNotFoundException;
 import com.crud.tacho.mapper.EntryMapper;
 import com.crud.tacho.repository.EntryRepository;
@@ -34,9 +35,10 @@ public class EntryService {
         return entryRepository.findById(id).orElseThrow(EntryNotFoundException::new);
     }
 
-    public Entry createEntry(Entry entry) throws AssignmentNotFoundException {
-        infringementService.calculateInfringement(entry.getAssignment());
+    public Entry createEntry(Entry entry) throws AssignmentNotFoundException, DutyNotFoundException {
+        //infringementService.calculateInfringement(entry.getAssignment());
         assignmentService.setStartAndEndTime(entry.getAssignment().getAssignmentId());
+        assignmentService.calculateHoliday(entry.getAssignment().getAssignmentId());
         return entryRepository.save(entry);
     }
 

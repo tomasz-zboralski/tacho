@@ -5,6 +5,7 @@ import com.crud.tacho.domain.CalendarificResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -13,7 +14,7 @@ public class CalendarificService {
 
     private final CalendarificClient calendarificClient;
 
-    public List<CalendarificResponse.Response.HolidayDto> fetchHolidays() {
-        return calendarificClient.getHolidays();
+    public List<CalendarificResponse.Response.HolidayDto> fetchHolidays(LocalDateTime date) {
+        return calendarificClient.getHolidays(date);
     }
 }

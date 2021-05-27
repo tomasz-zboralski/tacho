@@ -44,11 +44,11 @@ public class Duty implements Job, Serializable {
     )
     private Set<Assignment> assignments = new HashSet<>();
 
-    public Duty(BigDecimal hourlyRate, BigDecimal allowance, String agency, String company, Set<Assignment> assignments) {
+    public Duty(BigDecimal hourlyRate, BigDecimal allowance, String agency, String company) {
         this.hourlyRate = hourlyRate;
         this.allowance = allowance;
         this.agency = agency;
         this.company = company;
-        this.assignments = assignments;
+        //this.assignments = new HashSet<>();
     }
 }

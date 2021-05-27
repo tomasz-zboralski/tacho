@@ -35,7 +35,7 @@ public class Entry {
     private Duration duration;
 
     @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne//(cascade = CascadeType.ALL)
     @JoinColumn(name = "ASSIGNMENT_ID")
     private  Assignment assignment;
 

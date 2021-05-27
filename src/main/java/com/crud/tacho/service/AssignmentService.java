@@ -21,6 +21,8 @@ public class AssignmentService {
     private final AssignmentRepository assignmentRepository;
     private final DutyRepository dutyRepository;
     private final DriverRepository driverRepository;
+    private final DutyService dutyService;
+    private final CalendarificService calendarificService;
     //private final AssignmentMapper assignmentMapper;
 
     public List<Assignment> getAssignments() {
@@ -63,7 +65,23 @@ public class AssignmentService {
             assignment
                     .orElseThrow(AssignmentNotFoundException::new)
                     .setEndTime(entries.get(entries.size() -1).getEndTime());
+
+            assignmentRepository.save(assignment.get());
         }
+    }
+
+    public void calculateHoliday(Long assignmentId) throws AssignmentNotFoundException, DutyNotFoundException {
+        Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
+        Assignment assignment1 = assignment.orElseThrow(AssignmentNotFoundException::new);
+
+        if (assignment1.getStartTime() != null) {
+            if (!calendarificService.fetchHolidays(assignment1.getStartTime()).isEmpty() & !assignment1.isHoliday()) {
+                dutyService.addHoliday(assignment1.getDuty().getDutyId());
+                assignmentRepository.save(assignment.get());
+            }
+        }
+
+
     }
 
     public void deleteAssignment(Long id) {

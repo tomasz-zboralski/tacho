@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class DutyMapper {
 
-    private final AssignmentMapper assignmentMapper;
-
     public Duty mapJobToDuty(Job job) {
         return new Duty(
                 job.getDutyId(),

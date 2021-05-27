@@ -42,5 +42,13 @@ public class DutyService {
         return dutyMapper.mapJobToDuty(duty);
     }
 
+    public Duty addHoliday(Long dutyId) throws DutyNotFoundException {
+        Job duty = getDutyById(dutyId);
+        duty = new NightOutDecorator(duty);
+        return dutyRepository.save(dutyMapper.mapJobToDuty(duty));
+    }
+
+
+
 
 }
