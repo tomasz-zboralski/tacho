@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -13,6 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity
 @Table(name = "ENTRIES")
 public class Entry {
@@ -34,16 +36,16 @@ public class Entry {
     @Column
     private Duration duration;
 
-    @JsonBackReference
-    @ManyToOne//(cascade = CascadeType.ALL)
+    //@JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ASSIGNMENT_ID")
     private  Assignment assignment;
 
-    public Entry(String type, LocalDateTime startTime, LocalDateTime endTime, Assignment assignment) {
+    public Entry(String type, LocalDateTime startTime, LocalDateTime endTime) {
         this.type = type;
         this.startTime = startTime;
         this.endTime = endTime;
         this.duration = Duration.between(startTime, endTime);
-        this.assignment = assignment;
+        //this.assignment = assignment;
     }
 }

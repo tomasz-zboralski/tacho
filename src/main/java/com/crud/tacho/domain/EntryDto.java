@@ -16,5 +16,6 @@ public class EntryDto {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Duration duration;
-    private Long assignmentId;
+    //private Long assignmentId;
+    private Assignment assignment;
 }

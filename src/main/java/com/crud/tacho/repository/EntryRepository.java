@@ -3,13 +3,14 @@ package com.crud.tacho.repository;
 import com.crud.tacho.domain.Entry;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+//import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Transactional
+//@Transactional
 public interface EntryRepository extends CrudRepository<Entry, Long> {
 
     @Override

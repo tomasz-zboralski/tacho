@@ -9,6 +9,7 @@ import com.crud.tacho.mapper.EntryMapper;
 import com.crud.tacho.service.DriverService;
 import com.crud.tacho.service.EntryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@Transactional
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/v1")

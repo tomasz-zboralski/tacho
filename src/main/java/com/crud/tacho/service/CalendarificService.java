@@ -14,7 +14,8 @@ public class CalendarificService {
 
     private final CalendarificClient calendarificClient;
 
-    public List<CalendarificResponse.Response.HolidayDto> fetchHolidays(LocalDateTime date) {
-        return calendarificClient.getHolidays(date);
+    public boolean checkIfHoliday(LocalDateTime date) {
+        List<CalendarificResponse.Response.HolidayDto> holidayDtoList = calendarificClient.getHolidays(date);
+        return holidayDtoList.isEmpty();
     }
 }

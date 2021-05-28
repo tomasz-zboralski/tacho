@@ -9,16 +9,19 @@ import com.crud.tacho.mapper.EntryMapper;
 import com.crud.tacho.repository.EntryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class EntryService {
 
     private final EntryRepository entryRepository;
-    private final InfringementService infringementService;
-    private final AssignmentService assignmentService;
+    //private final InfringementService infringementService;
+    //private final AssignmentService assignmentService;
 
     public List<Entry> getEntries() {
         return entryRepository.findAll();
@@ -28,17 +31,22 @@ public class EntryService {
     }
 
     public List<Entry> getEntriesByAssignmentId(Long assignmentId) {
-        return entryRepository.findAllByAssignment_AssignmentId(assignmentId);
+        //return entryRepository.findAllByAssignment_AssignmentId(assignmentId);
+        return new ArrayList<>();
     }
 
     public Entry getEntryById(Long id) throws EntryNotFoundException {
         return entryRepository.findById(id).orElseThrow(EntryNotFoundException::new);
     }
 
-    public Entry createEntry(Entry entry) throws AssignmentNotFoundException, DutyNotFoundException {
+    public Entry createEntry(Entry entry) {
         //infringementService.calculateInfringement(entry.getAssignment());
-        assignmentService.setStartAndEndTime(entry.getAssignment().getAssignmentId());
-        assignmentService.calculateHoliday(entry.getAssignment().getAssignmentId());
+        //assignmentService.setStartAndEndTime(entry.getAssignment().getAssignmentId());
+//        if (entry.getAssignment().getEntries() != null) {
+//            assignmentService.calculateHoliday(entry.getAssignment().getAssignmentId());
+//        }
+        //assignmentService.calculateHoliday(entry.getAssignment().getAssignmentId());
+
         return entryRepository.save(entry);
     }
 

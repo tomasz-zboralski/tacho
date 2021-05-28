@@ -27,14 +27,14 @@ public class EntryRepositoryTestSuite {
     void testSaveEntry() {
 
         //Given
-        //Entry entry = new Entry();
-        Entry entry = new Entry(
-                EntryType.DRIVE.getType(),
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                new Assignment(null)
-
-        );
+        Entry entry = new Entry();
+//        Entry entry = new Entry(
+//                EntryType.DRIVE.getType(),
+//                LocalDateTime.now(),
+//                LocalDateTime.now()
+//                //new Assignment(null)
+//
+//        );
 
         //When
         entryRepository.save(entry);

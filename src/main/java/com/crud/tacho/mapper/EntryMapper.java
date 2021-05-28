@@ -27,7 +27,7 @@ public class EntryMapper {
                 entry.getStartTime(),
                 entry.getEndTime(),
                 entry.getDuration(),
-                entry.getAssignment().getAssignmentId()
+                entry.getAssignment()
         );
     }
 
@@ -38,7 +38,8 @@ public class EntryMapper {
                 entryDto.getStartTime(),
                 entryDto.getEndTime(),
                 entryDto.getDuration(),
-                assignmentService.getAssignmentById(entryDto.getAssignmentId())
+                entryDto.getAssignment()
+                //assignmentService.getAssignmentById(entryDto.getAssignmentId())
         );
     }
 

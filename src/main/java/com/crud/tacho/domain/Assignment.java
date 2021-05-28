@@ -37,7 +37,7 @@ public class Assignment {
     @Column(name = "DURATION")
     private Duration duration;
 
-    @ManyToOne//(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "DUTY_ID")
     private Duty duty;
 
@@ -49,7 +49,7 @@ public class Assignment {
     @JoinColumn(name = "INVOICE_ID")
     private Invoice invoice;
 
-    @JsonManagedReference
+    //@JsonManagedReference
     @OneToMany(
             targetEntity = Entry.class,
             mappedBy = "assignment",
@@ -66,7 +66,7 @@ public class Assignment {
     )
     private Set<Infringement> infringements;
 
-    @Autowired
+    //@Autowired
     public Assignment(LocalDateTime startTime, LocalDateTime endTime, Duty duty, Driver driver) {
         this.startTime = startTime;
         this.endTime = endTime;
@@ -74,10 +74,13 @@ public class Assignment {
         this.driver = driver;
         this.duration = Duration.between(startTime, endTime);
         this.isHoliday = false;
+        this.entries = new ArrayList<>();
     }
 
+    @Autowired
     public Assignment(Duty duty) {
         //this.duration = Duration.between(endTime, startTime);
         this.duty = duty;
+        this.entries = new ArrayList<>();
     }
 }

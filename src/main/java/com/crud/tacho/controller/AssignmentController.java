@@ -2,6 +2,7 @@ package com.crud.tacho.controller;
 
 import com.crud.tacho.domain.Assignment;
 import com.crud.tacho.domain.AssignmentDto;
+import com.crud.tacho.domain.Duty;
 import com.crud.tacho.exception.AssignmentNotFoundException;
 import com.crud.tacho.exception.DriverNotFoundException;
 import com.crud.tacho.exception.DutyNotFoundException;
@@ -39,6 +40,7 @@ public class AssignmentController {
 
     @PostMapping(value = "/assignments")
     public AssignmentDto createAssignment(@PathVariable Long dutyId) throws DutyNotFoundException {
+        //Duty duty = new Duty();
         return assignmentMapper.mapToAssignmentDto(assignmentService.createAssignment(dutyId));
     }
 

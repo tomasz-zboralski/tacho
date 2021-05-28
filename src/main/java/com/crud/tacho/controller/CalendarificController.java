@@ -18,7 +18,7 @@ public class CalendarificController {
     private final CalendarificService calendarificService;
 
     @GetMapping
-    public List<CalendarificResponse.Response.HolidayDto> getHolidays(LocalDateTime date) {
-        return calendarificService.fetchHolidays(date);
+    public boolean getHolidays(LocalDateTime date) {
+        return calendarificService.checkIfHoliday(date);
     }
 }
