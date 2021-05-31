@@ -20,8 +20,9 @@ public class Entry {
     @Column(name = "ENTRY_ID")
     private Long entryId;
 
+    @Enumerated(EnumType.STRING)
     @Column
-    private String type;
+    private EntryType type;
 
     @Column
     private LocalDateTime startTime;
@@ -37,7 +38,7 @@ public class Entry {
     @JoinColumn(name = "ASSIGNMENT_ID")
     private  Assignment assignment;
 
-    public Entry(String type, LocalDateTime startTime, LocalDateTime endTime) {
+    public Entry(EntryType type, LocalDateTime startTime, LocalDateTime endTime) {
         this.type = type;
         this.startTime = startTime;
         this.endTime = endTime;

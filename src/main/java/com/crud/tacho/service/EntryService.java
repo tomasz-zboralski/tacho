@@ -2,6 +2,7 @@ package com.crud.tacho.service;
 
 import com.crud.tacho.domain.Entry;
 import com.crud.tacho.domain.EntryDto;
+import com.crud.tacho.domain.EntryType;
 import com.crud.tacho.exception.AssignmentNotFoundException;
 import com.crud.tacho.exception.DutyNotFoundException;
 import com.crud.tacho.exception.EntryNotFoundException;
@@ -26,7 +27,7 @@ public class EntryService {
     public List<Entry> getEntries() {
         return entryRepository.findAll();
     }
-    public List<Entry> getEntriesByType(String type) {
+    public List<Entry> getEntriesByType(EntryType type) {
         return entryRepository.findAllByType(type);
     }
 

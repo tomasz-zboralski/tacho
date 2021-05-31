@@ -14,14 +14,13 @@ import java.util.Date;
 public class EntryDto {
 
     private Long entryId;
-    private String type;
+    private EntryType type;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Duration duration;
-    //private Long assignmentId;
     private Assignment assignment;
 
-    public EntryDto(Long entryId, String type, LocalDateTime startTime, LocalDateTime endTime) {
+    public EntryDto(Long entryId, EntryType type, LocalDateTime startTime, LocalDateTime endTime) {
         this.entryId = entryId;
         this.type = type;
         this.startTime = startTime;

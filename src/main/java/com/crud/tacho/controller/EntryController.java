@@ -2,6 +2,7 @@ package com.crud.tacho.controller;
 
 import com.crud.tacho.domain.Entry;
 import com.crud.tacho.domain.EntryDto;
+import com.crud.tacho.domain.EntryType;
 import com.crud.tacho.exception.AssignmentNotFoundException;
 import com.crud.tacho.exception.DutyNotFoundException;
 import com.crud.tacho.exception.EntryNotFoundException;
@@ -27,7 +28,7 @@ public class EntryController {
     private final EntryMapper entryMapper;
 
     @GetMapping(value = "/entries/type/{type}")
-    public List<EntryDto> getEntriesByType(@PathVariable String type) {
+    public List<EntryDto> getEntriesByType(@PathVariable EntryType type) {
         return entryMapper.mapToEntryDtoList(
                 entryService.getEntriesByType(type)
         );

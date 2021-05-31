@@ -1,6 +1,7 @@
 package com.crud.tacho.repository;
 
 import com.crud.tacho.domain.Entry;
+import com.crud.tacho.domain.EntryType;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +17,8 @@ public interface EntryRepository extends CrudRepository<Entry, Long> {
     @Override
     List<Entry> findAll();
 
-    List<Entry> findAllByType(String type);
+    List<Entry> findAllByType(EntryType type);
+    //List<Entry> findAllByType(En);
 
     List<Entry> findAllByAssignment_AssignmentId(Long id);
 

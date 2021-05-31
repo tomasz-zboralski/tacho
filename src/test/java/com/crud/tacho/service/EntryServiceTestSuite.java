@@ -3,6 +3,7 @@ package com.crud.tacho.service;
 import com.crud.tacho.domain.Assignment;
 import com.crud.tacho.domain.Duty;
 import com.crud.tacho.domain.Entry;
+import com.crud.tacho.domain.EntryType;
 import com.crud.tacho.exception.AssignmentNotFoundException;
 import com.crud.tacho.exception.DutyNotFoundException;
 import com.crud.tacho.exception.EntryNotFoundException;
@@ -51,7 +52,7 @@ public class EntryServiceTestSuite {
         //Given
         LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
         LocalDateTime endTime = LocalDateTime.of(2020, 12, 25, 10, 20);
-        Entry entry = new Entry("Drive", startTime, endTime);
+        Entry entry = new Entry(EntryType.DRIVE, startTime, endTime);
 
         //When
         Entry savedEntry = entryService.createEntry(entry);
@@ -72,8 +73,8 @@ public class EntryServiceTestSuite {
         LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
         LocalDateTime endTime = LocalDateTime.of(2020, 12, 25, 10, 20);
 
-        Entry entry = new Entry("Drive", startTime, endTime);
-        Entry entry2 = new Entry("Drive", startTime, endTime);
+        Entry entry = new Entry(EntryType.DRIVE, startTime, endTime);
+        Entry entry2 = new Entry(EntryType.DRIVE, startTime, endTime);
 
         entryRepository.save(entry);
         entryRepository.save(entry2);
@@ -98,8 +99,8 @@ public class EntryServiceTestSuite {
         LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
         LocalDateTime endTime = LocalDateTime.of(2020, 12, 25, 10, 20);
 
-        Entry entry = new Entry("Drive", startTime, endTime);
-        Entry entry2 = new Entry("Drive", startTime, endTime);
+        Entry entry = new Entry(EntryType.DRIVE, startTime, endTime);
+        Entry entry2 = new Entry(EntryType.DRIVE, startTime, endTime);
 
         Assignment assignment = new Assignment();
 
@@ -128,9 +129,9 @@ public class EntryServiceTestSuite {
         LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
         LocalDateTime endTime = LocalDateTime.of(2020, 12, 25, 10, 20);
 
-        Entry entry = new Entry("Drive", startTime, endTime);
-        Entry entry2 = new Entry("Rest", startTime, endTime);
-        Entry entry3 = new Entry("Drive", startTime, endTime);
+        Entry entry = new Entry(EntryType.DRIVE, startTime, endTime);
+        Entry entry2 = new Entry(EntryType.REST, startTime, endTime);
+        Entry entry3 = new Entry(EntryType.DRIVE, startTime, endTime);
 
         //When
 
@@ -138,7 +139,7 @@ public class EntryServiceTestSuite {
         entryRepository.save(entry2);
         entryRepository.save(entry3);
 
-        List<Entry> entries = entryService.getEntriesByType("Drive");
+        List<Entry> entries = entryService.getEntriesByType(EntryType.DRIVE);
 
         //Then
         assertEquals(2, entries.size());
@@ -158,7 +159,7 @@ public class EntryServiceTestSuite {
         LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
         LocalDateTime endTime = LocalDateTime.of(2020, 12, 25, 10, 20);
 
-        Entry entry = new Entry("Drive", startTime, endTime);
+        Entry entry = new Entry(EntryType.DRIVE, startTime, endTime);
 
         entryRepository.save(entry);
 

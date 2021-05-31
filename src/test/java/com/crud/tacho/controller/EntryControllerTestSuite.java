@@ -3,6 +3,7 @@ package com.crud.tacho.controller;
 import com.crud.tacho.domain.Driver;
 import com.crud.tacho.domain.Entry;
 import com.crud.tacho.domain.EntryDto;
+import com.crud.tacho.domain.EntryType;
 import com.crud.tacho.mapper.EntryMapper;
 import com.crud.tacho.service.EntryService;
 import com.google.gson.Gson;
@@ -46,12 +47,12 @@ class EntryControllerTestSuite {
         //Given
         List<Entry> entries = new ArrayList<>();
 
-        when(entryService.getEntriesByType("Drive")).thenReturn(entries);
+        when(entryService.getEntriesByType(EntryType.DRIVE)).thenReturn(entries);
 
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                        .get("/v1/entries/type/drive")
+                        .get("/v1/entries/type/DRIVE")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(0)));
@@ -95,8 +96,8 @@ class EntryControllerTestSuite {
     @Test
     void getEntry() throws Exception {
         //Given
-        Entry entry = new Entry("Drive", LocalDateTime.now(), LocalDateTime.now().plusMinutes(10));
-        EntryDto entryDto = new EntryDto(1L, "Drive", LocalDateTime.now(), LocalDateTime.now().plusMinutes(10));
+        Entry entry = new Entry(EntryType.DRIVE, LocalDateTime.now(), LocalDateTime.now().plusMinutes(10));
+        EntryDto entryDto = new EntryDto(1L, EntryType.DRIVE, LocalDateTime.now(), LocalDateTime.now().plusMinutes(10));
 
 
         when(entryService.getEntryById(1L)).thenReturn(entry);
@@ -109,7 +110,7 @@ class EntryControllerTestSuite {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.entryId", Matchers.is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.type", Matchers.is("Drive")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type", Matchers.is(EntryType.DRIVE.toString())));
 
     }
 

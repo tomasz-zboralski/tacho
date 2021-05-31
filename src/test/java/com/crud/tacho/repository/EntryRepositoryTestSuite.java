@@ -73,12 +73,6 @@ public class EntryRepositoryTestSuite {
 
     }
 
-//    @Test
-//    void testFindEntriesByType() {
-//        List<Entry> entries = entryRepository.findAllByType("Drive");
-//        System.out.println(entries.size());
-//    }
-
     @Test
     void testDeleteById() {
         //Given

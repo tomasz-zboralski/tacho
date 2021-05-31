@@ -3,6 +3,7 @@ package com.crud.tacho.service;
 import com.crud.tacho.domain.Assignment;
 import com.crud.tacho.domain.Duty;
 import com.crud.tacho.domain.Entry;
+import com.crud.tacho.domain.EntryType;
 import com.crud.tacho.exception.AssignmentNotFoundException;
 import com.crud.tacho.exception.DutyNotFoundException;
 import com.crud.tacho.exception.EntryNotFoundException;
@@ -62,8 +63,8 @@ public class AssignmentServiceTestSuite {
         LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
         LocalDateTime endTime = LocalDateTime.of(2020, 12, 25, 10, 20);
 
-        Entry entry = new Entry("Drive", startTime, endTime);
-        Entry entry2 = new Entry("Drive", startTime, endTime);
+        Entry entry = new Entry(EntryType.DRIVE, startTime, endTime);
+        Entry entry2 = new Entry(EntryType.DRIVE, startTime, endTime);
 
         Duty duty = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "AgencyEntryTest", "CompanyEntryTest");
 
