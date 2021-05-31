@@ -6,6 +6,9 @@ import com.crud.tacho.exception.AssignmentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class DriverMapper {
@@ -30,6 +33,12 @@ public class DriverMapper {
                 driver.getSurname(),
                 assignmentMapper.mapToAssignmentDtoSet(driver.getAssignments())
         );
+    }
+
+    public Set<DriverDto> mapToDriverDtoSet(Set<Driver> driverSet) {
+        return driverSet.stream()
+                .map(this::mapToDriverDto)
+                .collect(Collectors.toSet());
     }
 
 }

@@ -44,7 +44,7 @@ public class EntryRepositoryTestSuite {
         assertTrue(entryRepository.findById(entryId).isPresent());
 
         //CleanUp
-        //entryRepository.deleteById(entryId);
+        entryRepository.deleteById(entryId);
 
     }
 
@@ -73,11 +73,11 @@ public class EntryRepositoryTestSuite {
 
     }
 
-    @Test
-    void testFindEntriesByType() {
-        List<Entry> entries = entryRepository.findAllByType("Drive");
-        System.out.println(entries.size());
-    }
+//    @Test
+//    void testFindEntriesByType() {
+//        List<Entry> entries = entryRepository.findAllByType("Drive");
+//        System.out.println(entries.size());
+//    }
 
     @Test
     void testDeleteById() {

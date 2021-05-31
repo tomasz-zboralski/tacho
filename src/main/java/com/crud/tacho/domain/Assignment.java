@@ -45,9 +45,9 @@ public class Assignment {
     @JoinColumn(name = "DRIVER_ID")
     private Driver driver;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "INVOICE_ID")
-    private Invoice invoice;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "INVOICE_ID")
+//    private Invoice invoice;
 
     //@JsonManagedReference
     @OneToMany(
@@ -56,7 +56,7 @@ public class Assignment {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    private List<Entry> entries;// = new ArrayList<>();
+    private List<Entry> entries = new ArrayList<>();
 
     @OneToMany(
             targetEntity = Infringement.class,
@@ -74,13 +74,13 @@ public class Assignment {
         this.driver = driver;
         this.duration = Duration.between(startTime, endTime);
         this.isHoliday = false;
-        this.entries = new ArrayList<>();
+        //this.entries = new ArrayList<>();
     }
 
     @Autowired
     public Assignment(Duty duty) {
         //this.duration = Duration.between(endTime, startTime);
         this.duty = duty;
-        this.entries = new ArrayList<>();
+        //this.entries = new ArrayList<>();
     }
 }

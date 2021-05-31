@@ -14,8 +14,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-//@Inheritance
-//@DiscriminatorColumn(name="D_TYPE")
 @Entity(name = "DUTIES")
 public class Duty implements Job, Serializable {
 

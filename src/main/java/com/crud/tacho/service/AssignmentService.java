@@ -63,11 +63,11 @@ public class AssignmentService {
     }
 
     public void assignDriver(Long assignmentId, Long driverId) throws AssignmentNotFoundException, DriverNotFoundException {
-//        Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
-//        Optional<Driver> driver = driverRepository.findById(driverId);
-//        assignment.orElseThrow(AssignmentNotFoundException::new)
-//                .setDriver(driver.orElseThrow(DriverNotFoundException::new));
-//        assignmentRepository.save(assignment.orElseThrow(AssignmentNotFoundException::new));
+        Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
+        Optional<Driver> driver = driverRepository.findById(driverId);
+        assignment.orElseThrow(AssignmentNotFoundException::new)
+                .setDriver(driver.orElseThrow(DriverNotFoundException::new));
+        assignmentRepository.save(assignment.orElseThrow(AssignmentNotFoundException::new));
 
     }
 
@@ -99,21 +99,11 @@ public class AssignmentService {
                 .orElseThrow(AssignmentNotFoundException::new);
 //        Assignment assignment1 = assignment.orElseThrow(AssignmentNotFoundException::new);
 
-        if (!calendarificService.checkIfHoliday(assignment.getStartTime()) & !assignment.isHoliday()) {
+        if (calendarificService.checkIfHoliday(assignment.getStartTime()) & !assignment.isHoliday()) {
                 dutyService.addHoliday(assignment.getDuty().getDutyId());
                 assignment.setHoliday(true);
                 assignmentRepository.save(assignment);
             }
-
-//        if (assignment1.getStartTime() != null) {
-//            if (!calendarificService.fetchHolidays(assignment1.getStartTime()).isEmpty() & !assignment1.isHoliday()) {
-//                dutyService.addHoliday(assignment1.getDuty().getDutyId());
-//                assignment1.setHoliday(true);
-//                assignmentRepository.save(assignment.get());
-//            }
-//        }
-
-
     }
 
     public void deleteAssignment(Long id) {

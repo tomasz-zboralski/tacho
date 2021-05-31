@@ -9,6 +9,8 @@ import com.crud.tacho.repository.DriverRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class DriverService {
@@ -26,5 +28,9 @@ public class DriverService {
 
     public Driver getDriverById(Long id) throws DriverNotFoundException {
         return driverRepository.findById(id).orElseThrow(DriverNotFoundException::new);
+    }
+
+    public Set<Driver> getDrivers() {
+        return driverRepository.findAll();
     }
 }

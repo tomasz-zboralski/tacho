@@ -82,8 +82,8 @@ public class InfringementRepositoryTestSuite {
         assertEquals(1, infringements);
 
         //CleanUp
-//        infringementRepository.deleteById(infringement1Id);
-//        infringementRepository.deleteById(infringement2Id);
+        infringementRepository.deleteById(infringement1Id);
+        infringementRepository.deleteById(infringement2Id);
 
     }
 

@@ -29,7 +29,7 @@ public class CalendarificClient {
         int day = date.getDayOfMonth();
 
         return UriComponentsBuilder.fromHttpUrl("https://calendarific.com/api/v2/holidays")
-                .queryParam("api_key", "c5daf78fe6e1b70cd62a915c5e26e40724edb4ca")
+                .queryParam("api_key", "52b4f58940fe26bdb20b16c288455a6e2ab09b7cd7a6805b13f9f8f87c567eee")
                 .queryParam("country", "GB")
                 .queryParam("year", year)
                 .queryParam("month", month)

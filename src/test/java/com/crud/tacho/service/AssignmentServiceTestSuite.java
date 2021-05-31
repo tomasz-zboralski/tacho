@@ -35,6 +35,27 @@ public class AssignmentServiceTestSuite {
     AssignmentRepository assignmentRepository;
 
     @Test
+    void shouldCheckIfHoliday() throws DutyNotFoundException, AssignmentNotFoundException {
+
+        //Given
+        LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
+
+        Duty duty = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "AgencyEntryTest", "CompanyEntryTest");
+
+        //When
+        Duty savedDuty = dutyService.createDuty(duty);
+
+        Assignment assignment = assignmentService.createAssignment(savedDuty.getDutyId());
+
+        assignment.setStartTime(startTime);
+        assignmentService.calculateHoliday(assignment.getAssignmentId());
+
+        assertEquals(assignment.getStartTime(), startTime);
+        assertEquals(BigDecimal.valueOf(25), assignment.getDuty().getAllowance());
+
+    }
+
+    @Test
     void shouldAddEntriesAndCalculateTimeAndCheckIfHoliday() throws DutyNotFoundException, AssignmentNotFoundException, EntryNotFoundException {
 
         //Given
@@ -65,8 +86,9 @@ public class AssignmentServiceTestSuite {
         assertTrue(assignment.getEntries().contains(entry2));
         assertEquals(startTime ,assignment.getStartTime());
         assertEquals(endTime ,assignment.getEndTime());
-        assertEquals(new BigDecimal(25), duty.getAllowance());
         assertTrue(assignment.isHoliday());
+        assertEquals(new BigDecimal(25), duty.getAllowance());
+
 
     }
 }

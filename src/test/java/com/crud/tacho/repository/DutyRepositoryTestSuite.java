@@ -62,6 +62,9 @@ public class DutyRepositoryTestSuite {
         Duty savedDuty = dutyRepository.findById(dutyId).get();
         savedDuty = dutyMapper.mapJobToDuty(new NightOutDecorator(savedDuty));
         dutyRepository.save(savedDuty);
+
+        //CleanUp
+        dutyRepository.deleteById(dutyId);
     }
 
     @Test

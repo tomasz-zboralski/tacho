@@ -9,11 +9,13 @@ import com.crud.tacho.service.DriverService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(name = "/v1")
+@RequestMapping("/v1")
 public class DriverController {
 
     private final DriverService driverService;
@@ -23,6 +25,11 @@ public class DriverController {
     public DriverDto createDriver(@RequestBody DriverDto driverDto) throws AssignmentNotFoundException {
         Driver driver = driverMapper.mapToDriver(driverDto);
         return driverMapper.mapToDriverDto(driverService.createDriver(driver));
+    }
+
+    @GetMapping(value="/drivers")
+    public Set<DriverDto> getDrivers() {
+        return driverMapper.mapToDriverDtoSet(driverService.getDrivers());
     }
 
     @GetMapping(value = "drivers/{driverId}")

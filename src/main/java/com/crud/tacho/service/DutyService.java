@@ -48,6 +48,10 @@ public class DutyService {
         return dutyRepository.save(dutyMapper.mapJobToDuty(duty));
     }
 
+    public void deleteDuty(Long dutyId) {
+        dutyRepository.deleteById(dutyId);
+    }
+
 
 
 

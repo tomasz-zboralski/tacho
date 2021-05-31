@@ -23,7 +23,7 @@ public class DriverRepositoryTestSuite {
     void testSaveDriver() {
 
         //Given
-        Driver driver = new Driver("TestLTD", "TestName", "TestSurname", new HashSet<>());
+        Driver driver = new Driver("TestLTD", "TestName", "TestSurname");
 
         //When
         driverRepository.save(driver);
@@ -42,9 +42,9 @@ public class DriverRepositoryTestSuite {
 
         //Given
         Driver driver1 = new Driver(
-                "TestLTD", "TestName", "TestSurname", new HashSet<>());
+                "TestLTD", "TestName", "TestSurname");
         Driver driver2 = new Driver(
-                "TestLTD2", "TestName2", "TestSurname2", new HashSet<>());
+                "TestLTD2", "TestName2", "TestSurname2");
 
         //When
         driverRepository.save(driver1);
@@ -68,7 +68,7 @@ public class DriverRepositoryTestSuite {
 
         //Given
         Driver driver = new Driver(
-                "TestLTD", "TestName", "TestSurname", new HashSet<>());
+                "TestLTD", "TestName", "TestSurname");
 
         //When
         driverRepository.save(driver);

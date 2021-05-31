@@ -38,13 +38,13 @@ public class AssignmentController {
 
     }
 
-    @PostMapping(value = "/assignments")
+    @PostMapping(value = "/assignments/{dutyId}")
     public AssignmentDto createAssignment(@PathVariable Long dutyId) throws DutyNotFoundException {
         //Duty duty = new Duty();
         return assignmentMapper.mapToAssignmentDto(assignmentService.createAssignment(dutyId));
     }
 
-    @PostMapping(value = "/assignment/{assignmentId}/driver/{driverId}")
+    @PutMapping(value = "/assignment/{assignmentId}/driver/{driverId}")
     public void assignDriver(@PathVariable Long assignmentId, @PathVariable Long driverId) throws DriverNotFoundException, AssignmentNotFoundException {
         assignmentService.assignDriver(assignmentId, driverId);
     }

@@ -20,7 +20,7 @@ public class AssignmentDto {
     private Duration duration;
     private Duty duty;
     private Driver driver;
-    private Invoice invoice;
+    //private Invoice invoice;
     private List<EntryDto> entries;
     private Set<Infringement> infringements;
 }

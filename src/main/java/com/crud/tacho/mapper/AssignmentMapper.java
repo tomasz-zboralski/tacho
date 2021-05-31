@@ -26,7 +26,7 @@ public class AssignmentMapper {
                 assignmentDto.getDuration(),
                 assignmentDto.getDuty(),
                 assignmentDto.getDriver(),
-                assignmentDto.getInvoice(),
+                //assignmentDto.getInvoice(),
                 entryMapper.mapToEntryList(assignmentDto.getEntries()),
                 assignmentDto.getInfringements()
         );
@@ -41,7 +41,7 @@ public class AssignmentMapper {
                 assignment.getDuration(),
                 assignment.getDuty(),
                 assignment.getDriver(),
-                assignment.getInvoice(),
+                //assignment.getInvoice(),
                 entryMapper.mapToEntryDtoList(assignment.getEntries()),
                 assignment.getInfringements()
         );

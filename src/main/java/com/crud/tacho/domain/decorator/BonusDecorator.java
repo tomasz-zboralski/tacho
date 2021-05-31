@@ -10,21 +10,13 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Setter
-//@Entity
-//@DiscriminatorValue("B")
 public class BonusDecorator extends AbstractJobDecorator {
 
-//    @Id
-//    @GeneratedValue
-//    @Column(name = "DUTY_ID")
-//    private Long dutyId;
-
-    private BigDecimal value; //= new BigDecimal(50);
+    private BigDecimal value;
 
     public BonusDecorator(Job job, BigDecimal value) {
         super(job);
         this.value = value;
-        //this.dutyId = job.getDutyId();
     }
 
 
@@ -32,13 +24,4 @@ public class BonusDecorator extends AbstractJobDecorator {
     public BigDecimal getAllowance() {
         return super.getAllowance().add(value);
     }
-
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    @Id
-//    public Long getId() {
-//        return id;
-//    }
 }

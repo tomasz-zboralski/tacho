@@ -15,4 +15,9 @@ public class DriverDto {
     private String name;
     private String surname;
     private Set<AssignmentDto> assignments;
+
+    public DriverDto(Long driverId, String name) {
+        this.driverId = driverId;
+        this.name = name;
+    }
 }

@@ -31,8 +31,8 @@ public class EntryService {
     }
 
     public List<Entry> getEntriesByAssignmentId(Long assignmentId) {
-        //return entryRepository.findAllByAssignment_AssignmentId(assignmentId);
-        return new ArrayList<>();
+        return entryRepository.findAllByAssignment_AssignmentId(assignmentId);
+
     }
 
     public Entry getEntryById(Long id) throws EntryNotFoundException {

@@ -38,4 +38,8 @@ public class InfringementService {
                 .mapToLong(Infringement::getInfringementId)
                 .forEach(infringementRepository::deleteById);
     }
+
+    public List<Infringement> getAllInfringements() {
+        return infringementRepository.findAll();
+    }
 }
