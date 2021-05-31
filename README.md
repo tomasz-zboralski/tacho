@@ -1,7 +1,5 @@
 # tacho
 
--------------------------------------------
-
 This is an back-end app to organize work between agencies and hgv drivers who run thier own limited company.
 
 Agency can create "Duty" which can be accepted by a driver (Assignment) and then he/she can insert entries into it to calculate an entire shift time and check if drivers' hours rules has been violated (Infringement).
