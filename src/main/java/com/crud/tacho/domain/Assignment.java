@@ -9,13 +9,15 @@ import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+//@Getter
+//@Setter
 @Entity
 @Table(name = "ASSIGNMENTS")
 public class Assignment {
@@ -74,13 +76,10 @@ public class Assignment {
         this.driver = driver;
         this.duration = Duration.between(startTime, endTime);
         this.isHoliday = false;
-        //this.entries = new ArrayList<>();
     }
 
     @Autowired
     public Assignment(Duty duty) {
-        //this.duration = Duration.between(endTime, startTime);
         this.duty = duty;
-        //this.entries = new ArrayList<>();
     }
 }

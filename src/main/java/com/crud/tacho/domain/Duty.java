@@ -2,6 +2,7 @@ package com.crud.tacho.domain;
 
 import com.crud.tacho.domain.decorator.Job;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+//@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

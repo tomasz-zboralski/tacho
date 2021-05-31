@@ -20,10 +20,6 @@ public class CalendarificClient {
 
     private URI holidaysURL(LocalDateTime date) {
 
-//        int year = LocalDateTime.now().getYear();
-//        int month = LocalDateTime.now().getMonthValue();
-//        int day = LocalDateTime.now().getDayOfMonth();
-
         int year = date.getYear();
         int month = date.getMonthValue();
         int day = date.getDayOfMonth();
@@ -50,7 +46,6 @@ public class CalendarificClient {
                     .getHolidayDtoList()
                     .stream()
                     .collect(Collectors.toList());
-
 
         } catch (RestClientException e) {
             return new ArrayList<>();

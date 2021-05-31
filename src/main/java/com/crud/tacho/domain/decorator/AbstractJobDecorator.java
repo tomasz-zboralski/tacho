@@ -10,17 +10,7 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 @NoArgsConstructor
-//@Getter
-//@Entity
-//@DiscriminatorValue("A")
 public abstract class AbstractJobDecorator implements Job {
-
-
-
-//    @Id
-//    @GeneratedValue
-//    @Column(name = "DUTY_ID")
-//    private Long id;
 
     private Job job;
 
@@ -58,12 +48,4 @@ public abstract class AbstractJobDecorator implements Job {
         return job.getAssignments();
     };
 
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    @Id
-//    public Long getId() {
-//        return id;
-//    }
 }

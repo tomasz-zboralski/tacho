@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+//@Getter
 @Entity(name = "DRIVERS")
 public class Driver {
 
