@@ -36,7 +36,7 @@ public class EntryService {
 
     }
 
-    public Entry getEntryById(Long id) throws EntryNotFoundException {
+    public Entry getEntryById(Long id) {
         return entryRepository.findById(id).orElseThrow(EntryNotFoundException::new);
     }
 

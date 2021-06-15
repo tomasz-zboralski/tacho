@@ -7,6 +7,8 @@ import com.crud.tacho.exception.DutyNotFoundException;
 import com.crud.tacho.mapper.AssignmentMapper;
 import com.crud.tacho.service.AssignmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class AssignmentController {
     }
 
     @GetMapping(value = "/assignments/{assignmentId}")
-    public AssignmentDto getAssignment(@PathVariable Long assignmentId) throws AssignmentNotFoundException {
+    public AssignmentDto getAssignment(@PathVariable Long assignmentId) {
         return assignmentMapper.mapToAssignmentDto(assignmentService.getAssignmentById(assignmentId));
     }
 
@@ -35,12 +37,12 @@ public class AssignmentController {
     }
 
     @PostMapping(value = "/assignments/{dutyId}")
-    public AssignmentDto createAssignment(@PathVariable Long dutyId) throws DutyNotFoundException {
+    public AssignmentDto createAssignment(@PathVariable Long dutyId) {
         return assignmentMapper.mapToAssignmentDto(assignmentService.createAssignment(dutyId));
     }
 
     @PutMapping(value = "/assignment/{assignmentId}/driver/{driverId}")
-    public void assignDriver(@PathVariable Long assignmentId, @PathVariable Long driverId) throws DriverNotFoundException, AssignmentNotFoundException {
+    public void assignDriver(@PathVariable Long assignmentId, @PathVariable Long driverId) {
         assignmentService.assignDriver(assignmentId, driverId);
     }
 

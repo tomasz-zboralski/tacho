@@ -22,7 +22,7 @@ public class DriverController {
     private final DriverMapper driverMapper;
 
     @PostMapping(value = "/drivers", consumes = APPLICATION_JSON_VALUE)
-    public DriverDto createDriver(@RequestBody DriverDto driverDto) throws AssignmentNotFoundException {
+    public DriverDto createDriver(@RequestBody DriverDto driverDto) {
         Driver driver = driverMapper.mapToDriver(driverDto);
         return driverMapper.mapToDriverDto(driverService.createDriver(driver));
     }
@@ -33,7 +33,7 @@ public class DriverController {
     }
 
     @GetMapping(value = "drivers/{driverId}")
-    public DriverDto getDriver(@PathVariable Long driverId) throws DriverNotFoundException {
+    public DriverDto getDriver(@PathVariable Long driverId) {
         return driverMapper.mapToDriverDto(driverService.getDriverById(driverId));
     }
 
@@ -43,7 +43,7 @@ public class DriverController {
     }
 
     @PutMapping(value = "/drivers")
-    public DriverDto updateDriver(@RequestBody DriverDto driverDto) throws AssignmentNotFoundException {
+    public DriverDto updateDriver(@RequestBody DriverDto driverDto) {
         Driver driver = driverMapper.mapToDriver(driverDto);
         return driverMapper.mapToDriverDto(driverService.createDriver(driver));
     }

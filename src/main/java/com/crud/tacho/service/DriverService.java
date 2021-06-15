@@ -22,7 +22,7 @@ public class DriverService {
         driverRepository.deleteById(id);
     }
 
-    public Driver getDriverById(Long id) throws DriverNotFoundException {
+    public Driver getDriverById(Long id) {
         return driverRepository.findById(id).orElseThrow(DriverNotFoundException::new);
     }
 

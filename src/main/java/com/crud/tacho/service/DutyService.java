@@ -20,7 +20,7 @@ public class DutyService {
     private final DutyMapper dutyMapper;
     private final DutyRepository dutyRepository;
 
-    public Duty getDutyById(Long dutyId) throws DutyNotFoundException {
+    public Duty getDutyById(Long dutyId) {
         return dutyRepository.findById(dutyId)
                         .orElseThrow(DutyNotFoundException::new);
 
@@ -29,20 +29,20 @@ public class DutyService {
         return dutyRepository.save(duty);
     }
 
-    public Duty addNightOut(Long dutyId) throws DutyNotFoundException {
+    public Duty addNightOut(Long dutyId) {
         Job duty = getDutyById(dutyId);
         duty = new NightOutDecorator(duty);
         return dutyMapper.mapJobToDuty(duty);
 
     }
 
-    public Duty addBonus(Long dutyId, BigDecimal value) throws DutyNotFoundException {
+    public Duty addBonus(Long dutyId, BigDecimal value) {
         Job duty = getDutyById(dutyId);
         duty = new BonusDecorator(duty, value);
         return dutyMapper.mapJobToDuty(duty);
     }
 
-    public Duty addHoliday(Long dutyId) throws DutyNotFoundException {
+    public Duty addHoliday(Long dutyId) {
         Job duty = getDutyById(dutyId);
         duty = new NightOutDecorator(duty);
         return dutyRepository.save(dutyMapper.mapJobToDuty(duty));

@@ -1,4 +1,4 @@
 package com.crud.tacho.exception;
 
-public class DutyNotFoundException extends Exception {
+public class DutyNotFoundException extends RuntimeException {
 }

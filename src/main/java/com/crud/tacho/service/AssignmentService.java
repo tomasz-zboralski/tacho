@@ -39,18 +39,18 @@ public class AssignmentService {
 //                        .orElseThrow(AssignmentNotFoundException::new));
 //    }
 
-    public Assignment getAssignmentById(Long id) throws AssignmentNotFoundException {
+    public Assignment getAssignmentById(Long id) {
         return assignmentRepository.findById(id).orElseThrow(AssignmentNotFoundException::new);
     }
 
-    public Assignment createAssignment(Long dutyId) throws DutyNotFoundException {
+    public Assignment createAssignment(Long dutyId) {
         Duty duty = dutyRepository.findById(dutyId).orElseThrow(DutyNotFoundException::new);
         //Duty duty = new Duty();
         Assignment assignment = new Assignment(duty);
         return assignmentRepository.save(assignment);
     }
 
-    public void addEntry(Long assignmentId, Long entryId) throws AssignmentNotFoundException, EntryNotFoundException, DutyNotFoundException {
+    public void addEntry(Long assignmentId, Long entryId) {
         Assignment assignment = assignmentRepository.findById(assignmentId).orElseThrow(AssignmentNotFoundException::new);
         Entry entry = entryService.getEntryById(entryId);
         assignment.getEntries().add(entry);
@@ -71,7 +71,7 @@ public class AssignmentService {
 
     }
 
-    public void setStartAndEndTime(Long assignmentId) throws AssignmentNotFoundException {
+    public void setStartAndEndTime(Long assignmentId) {
         Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
         List<Entry> entries = assignment.orElseThrow(AssignmentNotFoundException::new).getEntries();
         if(!entries.isEmpty()) {
@@ -94,7 +94,7 @@ public class AssignmentService {
         }
     }
 
-    public void calculateHoliday(Long assignmentId) throws AssignmentNotFoundException, DutyNotFoundException {
+    public void calculateHoliday(Long assignmentId) {
         Assignment assignment = assignmentRepository.findById(assignmentId)
                 .orElseThrow(AssignmentNotFoundException::new);
 //        Assignment assignment1 = assignment.orElseThrow(AssignmentNotFoundException::new);
