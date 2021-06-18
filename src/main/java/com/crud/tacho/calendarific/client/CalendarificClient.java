@@ -1,5 +1,6 @@
 package com.crud.tacho.calendarific.client;
 
+import com.crud.tacho.calendarific.config.CalendarificConfig;
 import com.crud.tacho.domain.CalendarificResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class CalendarificClient {
 
     private final RestTemplate restTemplate;
+    private final CalendarificConfig calendarificConfig;
 
     private URI holidaysURL(LocalDateTime date) {
 
@@ -25,8 +27,8 @@ public class CalendarificClient {
         int month = date.getMonthValue();
         int day = date.getDayOfMonth();
 
-        return UriComponentsBuilder.fromHttpUrl("https://calendarific.com/api/v2/holidays")
-                .queryParam("api_key", "52b4f58940fe26bdb20b16c288455a6e2ab09b7cd7a6805b13f9f8f87c567eee")
+        return UriComponentsBuilder.fromHttpUrl(calendarificConfig.getCalendarificApiEndpoint())
+                .queryParam("api_key", calendarificConfig.getCalendarificApiKey())
                 .queryParam("country", "GB")
                 .queryParam("year", year)
                 .queryParam("month", month)
