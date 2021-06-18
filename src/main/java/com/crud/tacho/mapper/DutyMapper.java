@@ -6,6 +6,9 @@ import com.crud.tacho.domain.decorator.Job;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class DutyMapper {
@@ -42,6 +45,12 @@ public class DutyMapper {
                 job.getCompany(),
                 job.getAssignments()
         );
+    }
+
+    public Set<DutyDto> mapToDutyDtoSet(Set<Duty> duties) {
+        return duties.stream()
+                .map(this::mapToDutyDto)
+                .collect(Collectors.toSet());
     }
 
 }

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -19,6 +20,10 @@ public class DutyService {
 
     private final DutyMapper dutyMapper;
     private final DutyRepository dutyRepository;
+
+    public Set<Duty> getDuties() {
+        return dutyRepository.findAll();
+    }
 
     public Duty getDutyById(Long dutyId) {
         return dutyRepository.findById(dutyId)

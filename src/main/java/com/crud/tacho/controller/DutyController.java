@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -21,8 +22,13 @@ public class DutyController {
     private final DutyService dutyService;
     private final DutyMapper dutyMapper;
 
+    @GetMapping("/duties")
+    public Set<DutyDto> getDuties() {
+        return dutyMapper.mapToDutyDtoSet(dutyService.getDuties());
+    }
+
     @GetMapping(value = "/duties/{dutyId}")
-    public DutyDto getDuty(@PathVariable Long dutyId) throws DutyNotFoundException {
+    public DutyDto getDuty(@PathVariable Long dutyId) {
         return dutyMapper.mapToDutyDto(dutyService.getDutyById(dutyId));
     }
 
@@ -39,13 +45,13 @@ public class DutyController {
     }
 
     @PutMapping(value = "/duties/nightout/{dutyId}")
-    public DutyDto addNightOut(@PathVariable Long dutyId) throws DutyNotFoundException {
+    public DutyDto addNightOut(@PathVariable Long dutyId) {
         Duty duty = dutyService.addNightOut(dutyId);
         return dutyMapper.mapToDutyDto(dutyService.createDuty(duty));
     }
 
     @PutMapping(value = "/duties/{dutyId}/bonus/{value}")
-    public DutyDto addBonus(@PathVariable Long dutyId, @PathVariable BigDecimal value) throws DutyNotFoundException {
+    public DutyDto addBonus(@PathVariable Long dutyId, @PathVariable BigDecimal value) {
         Duty duty = dutyService.addBonus(dutyId, value);
         return dutyMapper.mapToDutyDto(dutyService.createDuty(duty));
     }
