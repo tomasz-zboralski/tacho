@@ -1,6 +1,12 @@
 # tacho
 
-This is an back-end app to organize work between agencies and hgv drivers who run their own limited company.
+This is an back-end app to organise work between agencies and HGV drivers who run their own limited companies.
+
+Work in progress.
+
+Api documentation: Swagger,
+
+About this app:
 
 Agency can create "Duty" which can be accepted by a driver (Assignment) and then he/she can insert entries into it to calculate an entire shift time and check if drivers' hours rules has been violated (Infringement).
 
