@@ -30,15 +30,15 @@ public class AssignmentController {
         return assignmentMapper.mapToAssignmentDto(assignmentService.getAssignmentById(assignmentId));
     }
 
+    @PostMapping(value = "/assignments/{dutyId}")
+    public AssignmentDto createAssignment(@PathVariable Long dutyId) {
+        return assignmentMapper.mapToAssignmentDto(assignmentService.createAssignment(dutyId));
+    }
+
     @DeleteMapping(value = "/assignments/{assignmentId}")
     public void deleteAssignment(@PathVariable Long assignmentId) {
         assignmentService.deleteAssignment(assignmentId);
 
-    }
-
-    @PostMapping(value = "/assignments/{dutyId}")
-    public AssignmentDto createAssignment(@PathVariable Long dutyId) {
-        return assignmentMapper.mapToAssignmentDto(assignmentService.createAssignment(dutyId));
     }
 
     @PutMapping(value = "/assignment/{assignmentId}/driver/{driverId}")
