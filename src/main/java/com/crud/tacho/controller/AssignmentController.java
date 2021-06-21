@@ -9,6 +9,7 @@ import com.crud.tacho.service.AssignmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class AssignmentController {
 
     }
 
-    @PutMapping(value = "/assignment/{assignmentId}/driver/{driverId}")
+    @PutMapping(value = "/assignments/{assignmentId}/driver/{driverId}")
     public void assignDriver(@PathVariable Long assignmentId, @PathVariable Long driverId) {
         assignmentService.assignDriver(assignmentId, driverId);
     }
