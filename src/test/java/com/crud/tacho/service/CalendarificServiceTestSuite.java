@@ -1,33 +1,39 @@
 package com.crud.tacho.service;
 
+import com.crud.tacho.calendarific.client.CalendarificClient;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class CalendarificServiceTestSuite {
 
-    @Autowired
+    @Mock
+    CalendarificClient calendarificClient;
+
+    @InjectMocks
     CalendarificService calendarificService;
 
     @Test
     void shouldCheckIfHolidays() {
 
-        //Given
-        LocalDateTime holiday = LocalDateTime.of(2020,12,25, 12,12 );
+        // Given & When
+        LocalDateTime notHoliday = LocalDateTime.of(2020,12,22, 12,12 );
 
-        //When
-        boolean isHoliday = calendarificService.checkIfHoliday(holiday);
+        when(calendarificClient.getHolidays(notHoliday)).thenReturn(new ArrayList<>());
+
+        boolean isHoliday = calendarificService.checkIfHoliday(notHoliday);
 
         //Then
-        assertTrue(isHoliday);
+        assertFalse(isHoliday);
 
     }
 

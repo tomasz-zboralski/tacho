@@ -2,112 +2,78 @@ package com.crud.tacho.service;
 
 import com.crud.tacho.domain.Assignment;
 import com.crud.tacho.domain.Infringement;
-import com.crud.tacho.repository.AssignmentRepository;
 import com.crud.tacho.repository.InfringementRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class InfringementServiceTestSuite {
 
-    @Autowired
-    InfringementService infringementService;
+    private static final Infringement INFRINGEMENT = new Infringement();
+    private static final Assignment ASSIGNMENT = new Assignment(
+            LocalDateTime.now().minusHours(14), LocalDateTime.now(), null, null
+    );
 
-    @Autowired
+    @Mock
     InfringementRepository infringementRepository;
 
-    @Autowired
-    AssignmentRepository assignmentRepository;
+    @InjectMocks
+    InfringementService infringementService;
+
 
     @Test
     void calculateInfringement() {
 
-        //Given
-        Assignment assignment = new Assignment();
+        //Given & When
+        when(infringementRepository.save(any(Infringement.class))).thenReturn(INFRINGEMENT);
 
-        assignment.setStartTime(LocalDateTime.now().minusHours(14));
-        assignment.setEndTime(LocalDateTime.now());
-        Duration duration = Duration.ofHours(14);
-        assignment.setDuration(duration);
-
-        //When
-        assignmentRepository.save(assignment);
-        infringementService.calculateInfringement(assignment);
-
-        List<Infringement> infringements = infringementService.getAllInfringements();
+        infringementService.calculateInfringement(ASSIGNMENT);
 
         //Then
-        assertEquals(1, infringements.size());
+        verify(infringementRepository, times(1)).save(any(Infringement.class));
 
-        //CleanUp
-        for (Infringement infringement:infringements) {
-            infringementRepository.deleteById(infringement.getInfringementId());
-        }
-        assignmentRepository.deleteById(assignment.getAssignmentId());
     }
 
     @Test
     void getAllValidInfringements() {
-        //Given
-        Assignment assignment = new Assignment();
 
-        assignment.setStartTime(LocalDateTime.now().minusHours(14));
-        assignment.setEndTime(LocalDateTime.now());
-        Duration duration = Duration.ofHours(14);
-        assignment.setDuration(duration);
+        //Given & When
+        List<Infringement> infringementList = Collections.singletonList(INFRINGEMENT);
+        when(infringementRepository.retrieveValidInfringements()).thenReturn(infringementList);
 
-        //When
-        assignmentRepository.save(assignment);
-        infringementService.calculateInfringement(assignment);
-
-        List<Infringement> infringements = infringementService.getAllValidInfringements();
+        List<Infringement> actualInfringementList = infringementService.getAllValidInfringements();
 
         //Then
-        assertEquals(1, infringements.size());
-
-        //CleanUp
-        for (Infringement infringement:infringements) {
-            infringementRepository.deleteById(infringement.getInfringementId());
-        }
-        assignmentRepository.deleteById(assignment.getAssignmentId());
+        assertEquals(infringementList, actualInfringementList);
 
     }
 
     @Test
     void deleteAllNotValidInfringements() {
-        //Given
-        Assignment assignment = new Assignment();
 
-        assignment.setStartTime(LocalDateTime.now().minusDays(30).minusHours(14));
-        assignment.setEndTime(LocalDateTime.now().minusDays(30));
-        Duration duration = Duration.ofHours(14);
-        assignment.setDuration(duration);
+        //Given & When
+        INFRINGEMENT.setInfringementId(1L);
+        List<Infringement> infringementList = Collections.singletonList(INFRINGEMENT);
 
-        //When
-        Assignment savedAssignment = assignmentRepository.save(assignment);
-        infringementService.calculateInfringement(assignment);
+        when(infringementRepository.retrieveNotValidInfringements()).thenReturn(infringementList);
+        doNothing().when(infringementRepository).deleteById(anyLong());
 
         infringementService.deleteAllNotValidInfringements();
 
-        List<Infringement> infringements = infringementService.getAllInfringements();
-
         //Then
-        assertEquals(0, infringements.size());
-
-        //CleanUp
-        assignmentRepository.deleteById(savedAssignment.getAssignmentId());
-
-
+        verify(infringementRepository, times(1)).retrieveNotValidInfringements();
+        verify(infringementRepository, times(1)).deleteById(anyLong());
 
     }
 }

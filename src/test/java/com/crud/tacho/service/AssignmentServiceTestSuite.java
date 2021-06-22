@@ -1,95 +1,182 @@
 package com.crud.tacho.service;
 
-import com.crud.tacho.domain.Assignment;
-import com.crud.tacho.domain.Duty;
-import com.crud.tacho.domain.Entry;
-import com.crud.tacho.domain.EntryType;
-import com.crud.tacho.exception.AssignmentNotFoundException;
-import com.crud.tacho.exception.DutyNotFoundException;
-import com.crud.tacho.exception.EntryNotFoundException;
+import com.crud.tacho.domain.*;
 import com.crud.tacho.repository.AssignmentRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
-@Transactional
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class AssignmentServiceTestSuite {
 
-    @Autowired
-    EntryService entryService;
-    @Autowired
+    private static final Assignment ASSIGNMENT = new Assignment();
+    private static final Driver DRIVER = new Driver();
+    private static final Entry ENTRY = new Entry();
+    private static final Duty DUTY = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "AgencyEntryTest", "CompanyEntryTest");
+    private static final Long ID = 1L;
+
+    @Mock
+    private AssignmentRepository assignmentRepository;
+
+    @Mock
+    private DutyService dutyService;
+    @Mock
+    private CalendarificService calendarificService;
+    @Mock
+    private EntryService entryService;
+    @Mock
+    private DriverService driverService;
+
+    @InjectMocks
+    @Spy
     AssignmentService assignmentService;
-    @Autowired
-    DutyService dutyService;
-    @Autowired
-    AssignmentRepository assignmentRepository;
 
     @Test
-    void shouldCheckIfHoliday() throws DutyNotFoundException, AssignmentNotFoundException {
+    void shouldGetAllAssignments() {
 
-        //Given
-        LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
+        //Given & When
+        List<Assignment> assignments = Collections.singletonList(ASSIGNMENT);
 
-        Duty duty = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "AgencyEntryTest", "CompanyEntryTest");
+        when(assignmentRepository.findAll()).thenReturn(assignments);
 
-        //When
-        Duty savedDuty = dutyService.createDuty(duty);
+        List<Assignment> actualAssignments = assignmentService.getAssignments();
 
-        Assignment assignment = assignmentService.createAssignment(savedDuty.getDutyId());
-
-        assignment.setStartTime(startTime);
-        assignmentService.calculateHoliday(assignment.getAssignmentId());
-
-        assertEquals(assignment.getStartTime(), startTime);
-        assertEquals(BigDecimal.valueOf(25), assignment.getDuty().getAllowance());
+        //Then
+        assertEquals(assignments, actualAssignments);
 
     }
 
     @Test
-    void shouldAddEntriesAndCalculateTimeAndCheckIfHoliday() throws DutyNotFoundException, AssignmentNotFoundException, EntryNotFoundException {
+    void shouldGetAssignmentById() {
 
-        //Given
+        //Given & When
+        when(assignmentRepository.findById(anyLong())).thenReturn(Optional.of(ASSIGNMENT));
+
+        Assignment actualAssignment =  assignmentService.getAssignmentById(ID);
+
+        //Then
+        assertEquals(ASSIGNMENT, actualAssignment);
+
+    }
+
+    @Test
+    void shouldCreateAssignment() {
+
+        //Given & When
+        when(dutyService.getDutyById(anyLong())).thenReturn(DUTY);
+        when(assignmentRepository.save(any())).thenReturn(ASSIGNMENT);
+
+        Assignment actualAssignment = assignmentService.createAssignment(ID);
+
+        //Then
+        assertEquals(ASSIGNMENT, actualAssignment);
+    }
+
+    @Test
+    void shouldAddEntry() {
+
+        //Given & When
+        when(assignmentRepository.findById(anyLong())).thenReturn(Optional.of(ASSIGNMENT));
+        when(entryService.getEntryById(anyLong())).thenReturn(ENTRY);
+        when(assignmentRepository.save(any())).thenReturn(ASSIGNMENT);
+
+        doNothing().when(assignmentService).setStartAndEndTime(anyLong());
+        doNothing().when(assignmentService).calculateHoliday(anyLong());
+
+        assignmentService.addEntry(ID, ID);
+
+        //Then
+        verify(assignmentRepository, times(1)).findById(anyLong());
+        verify(entryService, times(1)).getEntryById(anyLong());
+        verify(assignmentRepository, times(1)).save(any());
+        verify(assignmentService, times(1)).setStartAndEndTime(anyLong());
+        verify(assignmentService, times(1)).calculateHoliday(anyLong());
+
+    }
+
+    @Test
+    void shouldAssignDriver() {
+
+        //Given & When
+        when(assignmentRepository.findById(anyLong())).thenReturn(Optional.of(ASSIGNMENT));
+        when(driverService.getDriverById(anyLong())).thenReturn(DRIVER);
+        when(assignmentRepository.save(any())).thenReturn(ASSIGNMENT);
+
+        assignmentService.assignDriver(ID, ID);
+
+        //Then
+        verify(assignmentRepository, times(1)).findById(anyLong());
+        verify(driverService, times(1)).getDriverById(anyLong());
+        verify(assignmentRepository, times(1)).save(any());
+
+    }
+
+
+    @Test
+    void shouldSetStartAndEndTime() {
+
+        //Given & When
         LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
         LocalDateTime endTime = LocalDateTime.of(2020, 12, 25, 10, 20);
 
         Entry entry = new Entry(EntryType.DRIVE, startTime, endTime);
         Entry entry2 = new Entry(EntryType.DRIVE, startTime, endTime);
 
-        Duty duty = new Duty(BigDecimal.TEN, BigDecimal.ZERO, "AgencyEntryTest", "CompanyEntryTest");
+        List<Entry> entries = List.of(entry, entry2);
 
-        //When
-        Duty savedDuty = dutyService.createDuty(duty);
+        ASSIGNMENT.setEntries(entries);
 
-        Assignment assignment = assignmentService.createAssignment(savedDuty.getDutyId());
+        when(assignmentRepository.findById(anyLong())).thenReturn(Optional.of(ASSIGNMENT));
+        when(assignmentRepository.save(any())).thenReturn(ASSIGNMENT);
 
-        entry.setAssignment(assignment);
-        entry2.setAssignment(assignment);
-        entryService.createEntry(entry);
-        entryService.createEntry(entry2);
-
-        assignmentService.addEntry(assignment.getAssignmentId(), entry.getEntryId());
-        assignmentService.addEntry(assignment.getAssignmentId(), entry2.getEntryId());
+        assignmentService.setStartAndEndTime(ID);
 
         //Then
-        assertEquals(2, assignment.getEntries().size());
-        assertEquals(entry.getAssignment().getAssignmentId(), assignment.getAssignmentId());
-        assertTrue(assignment.getEntries().contains(entry2));
-        assertEquals(startTime ,assignment.getStartTime());
-        assertEquals(endTime ,assignment.getEndTime());
-        assertTrue(assignment.isHoliday());
-        assertEquals(new BigDecimal(25), duty.getAllowance());
+        assertEquals(startTime, ASSIGNMENT.getStartTime());
+        assertEquals(endTime, ASSIGNMENT.getEndTime());
 
 
     }
+
+    @Test
+    void shouldCalculateHoliday() {
+
+        //Given & When
+        DUTY.setDutyId(ID);
+        ASSIGNMENT.setDuty(DUTY);
+
+        when(assignmentRepository.findById(anyLong())).thenReturn(Optional.of(ASSIGNMENT));
+        when(calendarificService.checkIfHoliday(any())).thenReturn(true);
+        when(dutyService.addHoliday(anyLong())).thenReturn(DUTY);
+        when(assignmentRepository.save(any())).thenReturn(ASSIGNMENT);
+
+        assignmentService.calculateHoliday(ID);
+
+        //Then
+        assertTrue(ASSIGNMENT.isHoliday());
+    }
+
+    @Test
+    void shouldDeleteAssignmentById() {
+        //Given & When
+        doNothing().when(assignmentRepository).deleteById(ID);
+        assignmentService.deleteAssignment(ID);
+
+        //Then
+        verify(assignmentRepository,times(1)).deleteById(ID);
+    }
+
 }

@@ -22,30 +22,21 @@ import java.util.Optional;
 public class AssignmentService {
 
     private final AssignmentRepository assignmentRepository;
-    private final DutyRepository dutyRepository;
-    private final DriverRepository driverRepository;
     private final DutyService dutyService;
     private final CalendarificService calendarificService;
     private final EntryService entryService;
-    //private final AssignmentMapper assignmentMapper;
+    private final DriverService driverService;
 
     public List<Assignment> getAssignments() {
         return assignmentRepository.findAll();
     }
-
-//    public AssignmentDto getAssignmentById(Long id) throws AssignmentNotFoundException {
-//        return assignmentMapper.mapToAssignmentDto(
-//                assignmentRepository.findById(id)
-//                        .orElseThrow(AssignmentNotFoundException::new));
-//    }
 
     public Assignment getAssignmentById(Long id) {
         return assignmentRepository.findById(id).orElseThrow(AssignmentNotFoundException::new);
     }
 
     public Assignment createAssignment(Long dutyId) {
-        Duty duty = dutyRepository.findById(dutyId).orElseThrow(DutyNotFoundException::new);
-        //Duty duty = new Duty();
+        Duty duty = dutyService.getDutyById(dutyId);
         Assignment assignment = new Assignment(duty);
         return assignmentRepository.save(assignment);
     }
@@ -59,14 +50,12 @@ public class AssignmentService {
 
         assignmentRepository.save(assignment);
 
-
     }
 
-    public void assignDriver(Long assignmentId, Long driverId) throws AssignmentNotFoundException, DriverNotFoundException {
+    public void assignDriver(Long assignmentId, Long driverId) {
         Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
-        Optional<Driver> driver = driverRepository.findById(driverId);
-        assignment.orElseThrow(AssignmentNotFoundException::new)
-                .setDriver(driver.orElseThrow(DriverNotFoundException::new));
+        Driver driver = driverService.getDriverById(driverId);
+        assignment.orElseThrow(AssignmentNotFoundException::new).setDriver(driver);
         assignmentRepository.save(assignment.orElseThrow(AssignmentNotFoundException::new));
 
     }
@@ -97,7 +86,6 @@ public class AssignmentService {
     public void calculateHoliday(Long assignmentId) {
         Assignment assignment = assignmentRepository.findById(assignmentId)
                 .orElseThrow(AssignmentNotFoundException::new);
-//        Assignment assignment1 = assignment.orElseThrow(AssignmentNotFoundException::new);
 
         if (calendarificService.checkIfHoliday(assignment.getStartTime()) & !assignment.isHoliday()) {
                 dutyService.addHoliday(assignment.getDuty().getDutyId());
@@ -109,8 +97,5 @@ public class AssignmentService {
     public void deleteAssignment(Long id) {
         assignmentRepository.deleteById(id);
     }
-
-
-
 
 }

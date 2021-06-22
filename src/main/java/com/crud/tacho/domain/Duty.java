@@ -3,7 +3,6 @@ package com.crud.tacho.domain;
 import com.crud.tacho.domain.decorator.Job;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,10 +11,9 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-//@Data
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Entity(name = "DUTIES")
 public class Duty implements Job, Serializable {
 
@@ -49,6 +47,5 @@ public class Duty implements Job, Serializable {
         this.allowance = allowance;
         this.agency = agency;
         this.company = company;
-        //this.assignments = new HashSet<>();
     }
 }

@@ -1,83 +1,77 @@
 package com.crud.tacho.service;
 
 import com.crud.tacho.domain.Driver;
-import com.crud.tacho.exception.DriverNotFoundException;
+import com.crud.tacho.repository.DriverRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class DriverServiceTestSuite {
 
-    @Autowired
+    private static final Driver DRIVER = new Driver();
+    private static final Long ID = 1L;
+
+    @Mock
+    DriverRepository driverRepository;
+
+    @InjectMocks
     DriverService driverService;
 
     @Test
     void shouldCreateDriver() {
 
-        //Given
-        Driver driver = new Driver();
-
-        //When
-        Driver savedDriver = driverService.createDriver(driver);
-        Long driverId = savedDriver.getDriverId();
+        //Given & When
+        when(driverRepository.save(DRIVER)).thenReturn(DRIVER);
+        Driver actualDriver = driverService.createDriver(DRIVER);
 
         //Then
-        assertEquals(1, driverService.getDrivers().size());
-
-        //CleanUp
-        driverService.deleteDriver(driverId);
+        assertEquals(DRIVER, actualDriver);
 
     }
 
     @Test
-    void shouldFindDriverById() throws DriverNotFoundException {
+    void shouldFindDriverById() {
 
-        //Given
-        Driver driver = new Driver();
-
-        //When
-        Driver savedDriver = driverService.createDriver(driver);
-        Long driverId = savedDriver.getDriverId();
-
-        Driver retrievedDriver = driverService.getDriverById(driverId);
+        //Given & When
+        when(driverRepository.findById(ID)).thenReturn(Optional.of(DRIVER));
+        Driver actualDriver = driverService.getDriverById(ID);
 
         //Then
-        assertEquals(savedDriver.getDriverId(), retrievedDriver.getDriverId());
-
-        //CleanUp
-        driverService.deleteDriver(driverId);
+        assertEquals(DRIVER, actualDriver);
 
     }
 
     @Test
     void shouldFindAllDrivers() {
-        //Given
-        Driver driver = new Driver();
 
-        //When
-        Driver savedDriver = driverService.createDriver(driver);
-        Long driverId = savedDriver.getDriverId();
+        //Given & When
+        Set<Driver> drivers = Collections.singleton(DRIVER);
+        when(driverRepository.findAll()).thenReturn(drivers);
 
-        int drivers = driverService.getDrivers().size();
+        int driversSize = driverService.getDrivers().size();
 
         //Then
-        assertEquals(1, drivers);
-
-        //CleanUp
-        driverService.deleteDriver(driverId);
+        assertEquals(1, driversSize);
 
     }
 
+    @Test
+    void shouldDeleteDriverById() {
+        //Given & When
+        doNothing().when(driverRepository).deleteById(ID);
+        driverService.deleteDriver(ID);
 
-
-
+        //Then
+        verify(driverRepository,times(1)).deleteById(ID);
+    }
 }

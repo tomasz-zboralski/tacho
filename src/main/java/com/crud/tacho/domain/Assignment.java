@@ -1,23 +1,20 @@
 package com.crud.tacho.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@Getter
-//@Setter
 @Entity
 @Table(name = "ASSIGNMENTS")
 public class Assignment {

@@ -1,173 +1,100 @@
 package com.crud.tacho.service;
 
-import com.crud.tacho.domain.Assignment;
-import com.crud.tacho.domain.Duty;
 import com.crud.tacho.domain.Entry;
 import com.crud.tacho.domain.EntryType;
-import com.crud.tacho.exception.AssignmentNotFoundException;
-import com.crud.tacho.exception.DutyNotFoundException;
-import com.crud.tacho.exception.EntryNotFoundException;
-import com.crud.tacho.repository.AssignmentRepository;
 import com.crud.tacho.repository.EntryRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.*;
 
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class EntryServiceTestSuite {
 
-    @Autowired
-    EntryService entryService;
+    private static final Long ID = 1L;
+    private static final LocalDateTime START_TIME = LocalDateTime.of(2020, 12, 25, 10, 10);
+    private static final LocalDateTime END_TIME = LocalDateTime.of(2020, 12, 25, 10, 20);
+    private static final Entry ENTRY = new Entry(EntryType.DRIVE, START_TIME, END_TIME);
 
-    @Autowired
+    @Mock
     EntryRepository entryRepository;
 
-    @Autowired
-    AssignmentService assignmentService;
-
-    @Autowired
-    AssignmentRepository assignmentRepository;
-
-    @Autowired
-    DutyService dutyService;
+    @InjectMocks
+    EntryService entryService;
 
     @Test
     void shouldCreateEntry() {
 
-        //Given
-        LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
-        LocalDateTime endTime = LocalDateTime.of(2020, 12, 25, 10, 20);
-        Entry entry = new Entry(EntryType.DRIVE, startTime, endTime);
+        //Given & When
+        when(entryRepository.save(ENTRY)).thenReturn(ENTRY);
 
-        //When
-        Entry savedEntry = entryService.createEntry(entry);
+        Entry actualEntry = entryService.createEntry(ENTRY);
 
         //Then
-        assertEquals(1, entryService.getEntries().size());
-
-
-        //CleanUp
-        entryService.deleteEntry(savedEntry.getEntryId());
+        assertEquals(ENTRY, actualEntry);
 
     }
 
     @Test
     void shouldRetrieveAllEntries() {
 
-        //Given
-        LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
-        LocalDateTime endTime = LocalDateTime.of(2020, 12, 25, 10, 20);
+        //Given & When
+        List<Entry> entries = Collections.singletonList(ENTRY);
+        when(entryRepository.findAll()).thenReturn(entries);
 
-        Entry entry = new Entry(EntryType.DRIVE, startTime, endTime);
-        Entry entry2 = new Entry(EntryType.DRIVE, startTime, endTime);
-
-        entryRepository.save(entry);
-        entryRepository.save(entry2);
-
-        //When
-
-        List<Entry> entries = entryService.getEntries();
+        List<Entry> actualEntries = entryService.getEntries();
 
         //Then
-        assertEquals(2, entries.size());
-
-        //CleanUp
-        entryRepository.deleteById(entry.getEntryId());
-        entryRepository.deleteById(entry2.getEntryId());
+        assertEquals(entries, actualEntries);
 
     }
 
     @Test
     void shouldRetrieveEntryByAssignmentId() {
 
-        //Given
-        LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
-        LocalDateTime endTime = LocalDateTime.of(2020, 12, 25, 10, 20);
+        //Given & When
+        List<Entry> entries = Collections.singletonList(ENTRY);
+        when(entryRepository.findAllByAssignment_AssignmentId(ID)).thenReturn(entries);
 
-        Entry entry = new Entry(EntryType.DRIVE, startTime, endTime);
-        Entry entry2 = new Entry(EntryType.DRIVE, startTime, endTime);
+        List<Entry> actualEntries = entryService.getEntriesByAssignmentId(ID);
 
-        Assignment assignment = new Assignment();
+        assertEquals(entries, actualEntries);
 
-        entry.setAssignment(assignment);
-        entry2.setAssignment(assignment);
-
-        assignment.getEntries().add(entry);
-        assignment.getEntries().add(entry2);
-
-        Assignment savedAssignment = assignmentRepository.save(assignment);
-
-        //When
-        List<Entry> entries = entryService.getEntriesByAssignmentId(savedAssignment.getAssignmentId());
-
-        //Then
-        assertEquals(2, entries.size());
-
-        //CleanUp
-        assignmentService.deleteAssignment(savedAssignment.getAssignmentId());
     }
 
     @Test
     void shouldRetrieveEntriesByType() {
 
-        //Given
-        LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
-        LocalDateTime endTime = LocalDateTime.of(2020, 12, 25, 10, 20);
+        //Given & When
 
-        Entry entry = new Entry(EntryType.DRIVE, startTime, endTime);
-        Entry entry2 = new Entry(EntryType.REST, startTime, endTime);
-        Entry entry3 = new Entry(EntryType.DRIVE, startTime, endTime);
+        List<Entry> entries = Collections.singletonList(ENTRY);
+        when(entryRepository.findAllByType(EntryType.DRIVE)).thenReturn(entries);
 
-        //When
+        List<Entry> actualEntries = entryService.getEntriesByType(EntryType.DRIVE);
 
-        entryRepository.save(entry);
-        entryRepository.save(entry2);
-        entryRepository.save(entry3);
-
-        List<Entry> entries = entryService.getEntriesByType(EntryType.DRIVE);
-
-        //Then
-        assertEquals(2, entries.size());
-
-        //CleanUp
-        entryRepository.deleteById(entry.getEntryId());
-        entryRepository.deleteById(entry2.getEntryId());
-        entryRepository.deleteById(entry3.getEntryId());
-
+        assertEquals(entries, actualEntries);
 
     }
 
     @Test
     void shouldDeleteEntryById() {
 
-        //Given
-        LocalDateTime startTime = LocalDateTime.of(2020, 12, 25, 10, 10);
-        LocalDateTime endTime = LocalDateTime.of(2020, 12, 25, 10, 20);
-
-        Entry entry = new Entry(EntryType.DRIVE, startTime, endTime);
-
-        entryRepository.save(entry);
-
-        //When
-        entryService.deleteEntry(entry.getEntryId());
+        //Given & When
+        doNothing().when(entryRepository).deleteById(ID);
+        entryService.deleteEntry(ID);
 
         //Then
-        assertFalse(entryRepository.findById(entry.getEntryId()).isPresent());
+        verify(entryRepository,times(1)).deleteById(ID);
+
     }
 
 }
