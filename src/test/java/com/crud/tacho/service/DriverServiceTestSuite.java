@@ -58,10 +58,10 @@ public class DriverServiceTestSuite {
         Set<Driver> drivers = Collections.singleton(DRIVER);
         when(driverRepository.findAll()).thenReturn(drivers);
 
-        int driversSize = driverService.getDrivers().size();
+        Set<Driver> actualDrivers = driverService.getDrivers();
 
         //Then
-        assertEquals(1, driversSize);
+        assertEquals(drivers, actualDrivers);
 
     }
 

@@ -24,6 +24,7 @@ class InfringementServiceTestSuite {
     private static final Assignment ASSIGNMENT = new Assignment(
             LocalDateTime.now().minusHours(14), LocalDateTime.now(), null, null
     );
+    private static final Long ID = 1L;
 
     @Mock
     InfringementRepository infringementRepository;
@@ -63,7 +64,7 @@ class InfringementServiceTestSuite {
     void deleteAllNotValidInfringements() {
 
         //Given & When
-        INFRINGEMENT.setInfringementId(1L);
+        INFRINGEMENT.setInfringementId(ID);
         List<Infringement> infringementList = Collections.singletonList(INFRINGEMENT);
 
         when(infringementRepository.retrieveNotValidInfringements()).thenReturn(infringementList);
@@ -73,7 +74,7 @@ class InfringementServiceTestSuite {
 
         //Then
         verify(infringementRepository, times(1)).retrieveNotValidInfringements();
-        verify(infringementRepository, times(1)).deleteById(anyLong());
+        verify(infringementRepository, times(1)).deleteById(ID);
 
     }
 }

@@ -25,7 +25,7 @@ class AssignmentRepositoryTestSuite {
     void testSaveAssignment() {
 
         //Given
-        Assignment assignment = new Assignment(new Duty());
+        Assignment assignment = new Assignment();
 
         //When
         assignmentRepository.save(assignment);
@@ -43,8 +43,8 @@ class AssignmentRepositoryTestSuite {
     void testFindAllAssignments() {
 
         //Given
-        Assignment assignment1 = new Assignment(new Duty());
-        Assignment assignment2 = new Assignment(new Duty());
+        Assignment assignment1 = new Assignment();
+        Assignment assignment2 = new Assignment();
 
         //When
         assignmentRepository.save(assignment1);
@@ -68,7 +68,7 @@ class AssignmentRepositoryTestSuite {
     void testDeleteById() {
 
         //Given
-        Assignment assignment = new Assignment(new Duty());
+        Assignment assignment = new Assignment();
 
         //When
         assignmentRepository.save(assignment);
