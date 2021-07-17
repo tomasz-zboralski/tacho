@@ -54,7 +54,10 @@ public class Infringement {
         this.type = type;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.duration = Duration.between(startTime, endTime);
         this.assignment = assignment;
+    }
+
+    public Duration getDuration() {
+        return Duration.between(startTime, endTime);
     }
 }

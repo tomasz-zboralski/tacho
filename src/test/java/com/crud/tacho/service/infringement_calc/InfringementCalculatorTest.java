@@ -3,6 +3,7 @@ package com.crud.tacho.service.infringement_calc;
 import com.crud.tacho.domain.Assignment;
 import com.crud.tacho.domain.Entry;
 import com.crud.tacho.domain.EntryType;
+import com.crud.tacho.domain.Infringement;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,10 +59,10 @@ class InfringementCalculatorTest {
         assignment.setEntries(entries);
 
         //When
-        int result = infringementCalculator.isDrivingWithoutBreakInfringement(assignment);
+        Optional<Infringement> infringement = infringementCalculator.isDrivingWithoutBreakInfringement(assignment);
 
         //Then
-        assertEquals(-1, result);
+        assertFalse(infringement.isPresent());
 
     }
 
@@ -99,9 +101,9 @@ class InfringementCalculatorTest {
         assignment.setEntries(entries);
 
         //When
-        int result = infringementCalculator.isDrivingWithoutBreakInfringement(assignment);
+        Optional<Infringement> infringement = infringementCalculator.isDrivingWithoutBreakInfringement(assignment);
 
         //Then
-        assertEquals(271, result);
+        assertTrue(infringement.isPresent());
     }
 }

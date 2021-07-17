@@ -39,7 +39,7 @@ class InfringementServiceTestSuite {
         //Given & When
         when(infringementRepository.save(any(Infringement.class))).thenReturn(INFRINGEMENT);
 
-        infringementService.calculateInfringement(ASSIGNMENT);
+        infringementService.isDailyDrivingTimeExceeded(ASSIGNMENT);
 
         //Then
         verify(infringementRepository, times(1)).save(any(Infringement.class));

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -17,27 +18,16 @@ public class InfringementService {
     private final InfringementRepository infringementRepository;
     private final InfringementCalculator infringementCalculator;
 
-    public void calculateInfringement(Assignment assignment) {
-        if (assignment.getDuration().compareTo(Duration.ofHours(13)) > 0) {
-            Infringement infringement = new Infringement(
-                    "Daily work time exceeded",
-                    assignment.getStartTime(),
-                    assignment.getEndTime(),
-                    assignment
-            );
-            infringementRepository.save(infringement);
-        }
+    public void isDailyDrivingTimeExceeded(Assignment assignment) {
+        Optional<Infringement> infringementOptional = infringementCalculator.isDailyDrivingTimeExceeded(assignment);
+        infringementOptional.ifPresent(infringementRepository::save);
 
     }
 
     public void isDrivingWithoutBreakInfringement(Assignment assignment) {
-        int drivingTime = infringementCalculator.isDrivingWithoutBreakInfringement(assignment);
-        if (drivingTime >= 1) infringementRepository.save(new Infringement(
-                "Driving time without break exceeded for " + drivingTime + " minutes.",
-                assignment.getStartTime(),
-                assignment.getEndTime(),
-                assignment
-        ));
+        Optional<Infringement> infringementOptional = infringementCalculator.isDrivingWithoutBreakInfringement(assignment);
+        infringementOptional.ifPresent(infringementRepository::save);
+
     }
 
     public List<Infringement> getAllValidInfringements() {
