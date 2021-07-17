@@ -1,5 +1,6 @@
 package com.crud.tacho.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,11 +45,7 @@ public class Assignment {
     @JoinColumn(name = "DRIVER_ID")
     private Driver driver;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "INVOICE_ID")
-//    private Invoice invoice;
-
-    //@JsonManagedReference
+    @JsonManagedReference
     @OneToMany(
             targetEntity = Entry.class,
             mappedBy = "assignment",

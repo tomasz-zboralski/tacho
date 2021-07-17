@@ -6,7 +6,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -33,7 +32,7 @@ public class Entry {
     @Column
     private Duration duration;
 
-    //@JsonBackReference
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ASSIGNMENT_ID")
     private  Assignment assignment;
@@ -43,6 +42,5 @@ public class Entry {
         this.startTime = startTime;
         this.endTime = endTime;
         this.duration = Duration.between(startTime, endTime);
-        //this.assignment = assignment;
     }
 }

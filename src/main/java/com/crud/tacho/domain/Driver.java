@@ -2,7 +2,6 @@ package com.crud.tacho.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,7 +11,6 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@Getter
 @Entity(name = "DRIVERS")
 public class Driver {
 
@@ -42,7 +40,6 @@ public class Driver {
         this.limitedCompanyName = limitedCompanyName;
         this.name = name;
         this.surname = surname;
-        //this.assignments = assignments;
     }
 
     public Driver(Long driverId, String name) {
