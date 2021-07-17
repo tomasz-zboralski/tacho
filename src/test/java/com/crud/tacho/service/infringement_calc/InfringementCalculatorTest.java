@@ -57,15 +57,15 @@ class InfringementCalculatorTest {
         assignment.setEntries(entries);
 
         //When
-        boolean result = infringementCalculator.isDrivingTimeInfringement(assignment);
+        int result = infringementCalculator.isDrivingWithoutBreakInfringement(assignment);
 
         //Then
-        assertFalse(result);
+        assertEquals(-1, result);
 
     }
 
     @Test
-    void shouldBeInfringement() {
+    void shouldBeDrivingWithoutBreakInfringement() {
         //Given
 
         List<Entry> entries = new ArrayList<>();
@@ -99,9 +99,9 @@ class InfringementCalculatorTest {
         assignment.setEntries(entries);
 
         //When
-        boolean result = infringementCalculator.isDrivingTimeInfringement(assignment);
+        int result = infringementCalculator.isDrivingWithoutBreakInfringement(assignment);
 
         //Then
-        assertTrue(result);
+        assertEquals(271, result);
     }
 }
